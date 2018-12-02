@@ -1,0 +1,1820 @@
+\documentclass[a4paper,11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{colortbl}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage{amsfonts,amssymb,amsthm,amsmath}
+\usepackage{fancyhdr}
+\usepackage{faktor}
+\usepackage{geometry}
+\usepackage{afterpage}
+\newcommand\blankpage{%
+	\null
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\newpage}
+\usepackage{enumitem}
+\usepackage{slantsc}
+\usepackage{titling, titlesec}
+\usepackage[Sonny]{fncychap}
+
+\setcounter{secnumdepth}{4}
+\addto\captionscatalan{\renewcommand{\chaptername}{}}
+\titleformat{\section}{\Large\bfseries\sffamily}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\sffamily}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\sffamily}{\thesubsubsection}{1em}{}
+\makeindex
+\title{\sffamily Estructures Algebraiques\\ 2017/2018}
+\author{\sffamily Carles Falcó i Gandia}
+\date{ }
+\geometry{top=1.25in, bottom=1.25in, left=1.2in, right=1.2in}
+\setlength{\parskip}{8pt}
+\newcommand{\inv}[1]{#1^{-1}}
+\newcommand{\pr}{^*}
+\newcommand{\barra}{\,|\,}
+\DeclareMathOperator{\irr}{Irr}
+\newcommand{\orb}{\mathcal{O}}
+\newcommand{\puntets}{\cdot\ldots\cdot}
+\renewcommand{\div}{\mid}
+\DeclareMathOperator{\mcd}{mcd}
+\DeclareMathOperator{\mcm}{mcm}
+\newcommand{\ordre}[1]{|#1|}
+\DeclareMathOperator{\grau}{grau}
+\newcommand{\z}{\mathbb{Z}}
+\newcommand{\fra}{\mathcal{F}}
+\newcommand{\zn}{\mathbb{Z}/n\mathbb{Z}}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\ch}{ch}
+\renewcommand{\bar}{\overline}
+\renewcommand{\implies}{\Leftrightarrow}
+\newcommand{\im}{\Rightarrow}
+\theoremstyle{theorem}
+\newtheorem{proposicio}{\normalfont \sffamily\bfseries Proposició}[section]
+\newtheorem{teorema}{\normalfont \sffamily\bfseries Teorema}[section]
+\newtheorem{lema}{\normalfont \sffamily\bfseries Lema}[section]
+\newtheorem{col}{\normalfont \sffamily\bfseries Corol·lari}[section]
+\newtheorem*{zornlema}{\normalfont\sffamily\bfseries Lema de Zorn}
+\newtheorem*{lemaeuclid}{\normalfont\sffamily\bfseries Lema d'Euclides}
+\newtheorem*{lemagauss}{\normalfont\sffamily\bfseries Lema de Gauss}
+\theoremstyle{definition}
+\newtheorem{definicio}{\normalfont\sffamily\bfseries Definició}[section]
+\renewcommand{\labelitemi}{$\circ$}
+\DeclareMathOperator{\ima}{Im}
+\setlength{\droptitle}{-4\baselineskip} 
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\leftmark}
+\fancyhead[R]{\thepage}
+\begin{document}
+	\begin{titlingpage}
+	\maketitle
+	
+
+\end{titlingpage}
+	\afterpage{\blankpage}
+\thispagestyle{plain}
+	\tableofcontents
+	\newpage
+	\pagestyle{fancy}
+	\chapter{Grups}
+		
+		\section{Grups i subgrups}
+	\begin{definicio}
+		Direm que un conjunt $G$ no buit i tancat amb una operació $\cdot:G\times G\rightarrow G$ és un grup si compleix:
+		\begin{enumerate}
+			\item  $(x\cdot y)\cdot z=x\cdot (y\cdot z)$ per tot $x,y,z\in G$
+			\item Existeix $e\in G$ tal que $e\cdot x=x\cdot e=x$ per tot $x\in G$ 
+			\item Per tot $x\in G$ existeix $y\in G$ tal que $x\cdot y=y\cdot x=e$
+		\end{enumerate}
+	És a dir si l'operació $\cdot$ és associativa, té element neutre, i a més, per cada element de $G$ existeix un element invers.
+	\end{definicio}
+\begin{definicio}
+	Direm que un grup $G$ és abelià si l'operació commuta, ço és si
+		$
+			x\cdot y=y\cdot x
+		$
+		per tot $x,y\in G$.
+\end{definicio}
+Amb això ja es poden provar algunes propietats.
+\begin{proposicio}
+	$G$ grup.
+	\begin{enumerate}
+		\item El neutre és únic.
+		\item Per tot $x\in G$ l'invers de $x$ és únic.
+	\end{enumerate}
+\begin{proof} 
+	
+	\begin{enumerate}
+		\item Siguin $e,e'$ dos neutres. Tenim $e\cdot e'=e'=e$.
+		\item Sigui $x\in G$ i $x_1,x_2$ dos inversos de $x$, tenim $e=x\cdot x_1=x\cdot x_2$. I ara fent $x_2=x_2\cdot e=x_2\cdot (x\cdot x_1)=(x_2\cdot x)\cdot x=x_1\cdot e=x_1$.
+	\end{enumerate}
+\end{proof}
+\end{proposicio}
+Alguns exemples de grups són:
+\begin{enumerate}
+	\item $(\mathbb{Z,+}),(\mathbb{Q,+}), (\mathbb{R,+}) $
+	\item Si $K$ és un cos i $E$ un $K$-espai vectorial llavors $(E,+)$ és un grup. Igualment $(\mathbb{Z}/n\mathbb{Z},+)$.
+	\item De no commutatius tenim per exemple el grup simètric $S_n=\{\sigma:\{1,\ldots,n\}\rightarrow\{1,\ldots,n\}|\text{ } \sigma \text{ és bijectiva}\}$ amb la composició $\circ$. $(S_n,\circ)$ no és commutatiu si $n>2$.
+	\item També $GL_n(K)=\{A\in M_n(K)| A \text{ és invertible}\}$ amb el producte de matrius $(GL_n(K),\cdot)$ és un grup.
+	\item Un altre exemple és el grup dièdric $D_{2n}$. Es correspon amb les simetries d'un polígon regular d'$n$ costats. Està format per $2n$ elements dels quals $n$ són rotacions i $n$ són reflexions.
+	\item Per últim, si $G_i$ amb $i\in I$ és una família de grups, el producte directe definit com $\prod_{i\in I} G_i$ és també un grup. En efecte definint el producte component a component $(x_i)(y_i)=(x_i y_i)$ el neutre serà $e=(e_i)$ amb $e_i$ neutre de cada grup $G_i$ i l'invers de cada element serà anàlogament $(x_i)^{-1}=(x_i^{-1})$
+\end{enumerate}
+Quant a la notació referent a l'operació definida sobre el grup distingirem entre la \textit{notació multiplicativa} emprada fins ara, i la \textit{notació additiva}, segons la qual l'operació es denota amb $+$, el neutre pel $0$ i als inversos $-x$. Aquesta última s'utilitzarà només quan el grup és abelià.
+
+Veiem més propietats dels grups.
+\begin{proposicio} Sigui $G$ un grup amb $e$ neutre, per tot $x,y\in G$:
+	\begin{enumerate}
+		\item $e^{-1}=e$
+		\item $(x^{-1})^{-1}=x$
+		\item $(x y)=y^{-1} x^{-1}$
+	\end{enumerate}
+\begin{proof}
+	\begin{enumerate}
+	\item Òbviament $ee=e$ i multiplicant per l'invers de $e$ ho tenim.
+	\item Per unicitat i $xx^{-1}=x^{-1} x=e$ tenim $(x^{-1})^{-1}=x$
+	\item Tenim $xy y^{-1} x^{-1}=xx^{-1}=e$ i també $y^{-1} x^{-1}xy=e$
+		\end{enumerate}
+\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Sigui $G$ un grup, és commutatiu si i només si $(xy)=x^{-1}y^{-1}$ per tot $x,y\in G$.
+	\begin{proof}
+		Cap a la dreta és trivial puix $(xy)=y^{-1}x^{-1}$ i si $G$ és commutatiu tenim $xy=x^{-1}y^{-1}$.
+		Recíprocament si $\inv{(xy)}=\inv{x}\inv{y}$ tenim que $xy=\inv{(\inv{x})}\inv{(\inv{y})}=\inv{(\inv{y}\inv{x})}=yx$ i per tant $G$ és commutatiu.
+	\end{proof}
+\end{proposicio}
+Més propietats que són conseqüència immediata del vist fins ara són:
+\begin{proposicio}
+	G grup. Aleshores per tot $x,y,z\in G$ es compleix:
+	\begin{enumerate}
+		\item $xy=xz$ $\Rightarrow$ $y=z$
+		\item $yx=zx$ $ \Rightarrow$ $y=z$
+	\end{enumerate}
+\end{proposicio}
+A partir d'ara $G$ és sempre un grup.
+\begin{definicio}
+	Sigui $H\subseteq G$ no buit direm que $H$ és un subgrup de $G$ si $H$ amb l'operació restringida a $H$ és un grup. En altres paraules, $H$ és subgrup de $G$ si és tancat per l'operació definida sobre $G$ i a més compleix els 3 axiomes de la definició de grup. S'escriu en aquest cas $H\leq G$.
+\end{definicio}
+\begin{definicio}
+	G grup. Els subgrups impropis de $G$ són $\{e\}$ i el propi $G$. Així anomenem subgrups propis a tots els subgrups que no són un d'aquests.
+\end{definicio}
+\begin{proposicio}
+	$H\subseteq G$, $H$ no buit és un subgrup de $G$ si i només si per a tot $x,y\in H$ es dóna que $x\inv{y}\in H$.
+	\begin{proof}
+		Si $H$ és un subgrup llavors $x,y\in H$ implica que $\inv{y}$ i per tant $x\inv{y}\in H$.
+		Recíprocament suposant que $x\inv{y}\in H$ per tot $x,y\in H$ tenim que $x\inv{x}=e\in H$. Igualment l'operació continua sent associativa. D'altra banda com que $x,e\in H$, $e\inv{x}=\inv{x}\in H$. I això ens permet veure finalment que $H$ és tancat ja que si $x,y \in H$ llavors $\inv{y}\in H$ i amb això $x(\inv{y})^{-1}=xy\in H$. 
+	\end{proof}
+\end{proposicio}
+Alguns exemples de subgrups són:
+\begin{enumerate}
+\item  Per $(\mathbb{Z,+})$ fixem $a\in\mathbb{Z}$ i fem $H=(a)$, és a dir, el conjunt dels múltiples de $a$. Efectivament $H$ és subgrup de $(\mathbb{Z,+})$, puix donats dos elements de $(a)$ tindrem $\alpha a-\beta a=(\alpha -\beta) a\in (a)$.
+\item A $(S_n,\circ)$ tenim el grup alternat $A_n=\{\sigma\in S_n| \sigma \text{ és parell}\}$ és a dir, el conjunt de les permutacions de $S_n$ que descomposen en un nombre parell de transposicions. Veiem que $A_n$ és un subgrup de $S_n$. Siguin $\sigma,\sigma'\in S_n$ sabem que descomposen segons: $\sigma=\tau_1\circ\ldots\circ\tau_r$ i $\sigma'=\tau'_1\circ\ldots\tau'_p$ amb $r,p$ parells.
+Observem que $\inv{(\sigma')}=\inv{(\tau'_1\circ\ldots\tau'_p)}=\inv{(\tau'_p)}\circ\ldots\circ\inv{(\tau'_1)}$. Amb això és immediat veure que $\sigma\circ(\sigma')^{-1}=\tau_1\circ\ldots\circ\tau_r\circ\inv{(\tau'_p)}\circ\ldots\circ\inv{(\tau'_1)}\in A_n$ en tant que descomposa en un nombre $r+p$ parell de transposicions. Observem també que hi ha el mateix nombre de permutacions de $S_n$ que descomposen en un nombre parell de transposicions que de permutacions que ho fan en un nombre senar. Si teníem que $|S_n|=n!$, ara veiem que $|A_n|=\tfrac{n!}{2}$
+\item Donat un grup $G$, amb element neutre $e$, s'anomena subgrup trivial a $\{e\}$. Igualment $G$ en si mateix és subgrup de $G$.
+\item Com és habitual la intersecció finita de subgrups forma un subgrup. Tanmateix això no ocorre amb la unió i generalment no és veritat que la unió de subgrups sigui subgrup -la unió no és tancada-.
+\item Fent $G=GL_n(K)$, el conjunt $H=\{A\in GL_n(K)|\det(A)=1\}$ és subgrup de $G$. Observem que si $A,B\in H$ llavors $\det(A\inv{B})=\det A\cdot \inv{(\det B)}=1$.
+\end{enumerate}
+\begin{definicio}
+	Sigui $S$ un subconjunt de $G$ no buit. Definim el subgrup generat per $S$, $\langle S\rangle$ com el mínim subgrup de $G$ que conté $G$.
+\end{definicio} 
+És fàcil arribar a la conclusió que $\langle S\rangle=\bigcap_ {S\subseteq H} H$ amb $H$ subgrup de $G$.
+\begin{proposicio}
+	Fixat $g\in G$ llavors $\langle g\rangle=\{\ldots,g^{-2},\inv{g},e=g^0,g,g^2,\ldots\}$
+	\begin{proof}
+		S'ha de veure que aquest subconjunt de $G$ és subgrup, puix és clar que és el mínim. Així doncs siguin $x=g^i,y=g^j\in \{\ldots,g^{-2},\inv{g},e=g^0,g,g^2,\ldots\}$ tenim que $x\inv{y}=g^i g^{j}=g^{i-j}$ que està en aquest subconjunt. Per tant és subgrup i tenim $\langle g\rangle=\{\ldots,g^{-2},\inv{g},e=g^0,g,g^2,\ldots\}$.
+	\end{proof}
+	\end{proposicio}
+\begin{definicio}
+	Anomenarem ordre de $G$, $|G|$, al nombre d'elements de $G$ si aquest és finit. En cas contrari direm que té ordre infinit.
+	
+	Si $g\in G$ llavors l'ordre de $g$ és l'ordre del subgrup que genera: $|g|=|\langle g\rangle|$.
+\end{definicio}
+	\begin{proposicio}
+		Si $g\in G$, llavors $|g|=n$ si i només si $n=\min\{k\in\mathbb{N} \text{ }|\text{ } g^k=e\}$. En aquest cas $\langle g\rangle=\{e,g,g^2,\ldots,g^{n-1}\}$.
+		\begin{proof}
+		Cap a l'esquerra és trivial en tant que si  $\langle g\rangle=\{e,g,g^2,\ldots,g^{n-1}\}$ tenim $|g|=n$.
+		
+	
+		Suposant que $|g|=n$ tenim que el conjunt $\langle g\rangle=\{e,g,g^2,\ldots\}$ és finit. Això implica que existeixen $i,j,i>j$ de forma que $g^i=g^j\Leftrightarrow g^{i-j}=e$. Sigui ara $m=\min\{k\in\mathbb{N} \text{ }|\text{ } g^k=e\}$ hem de veure que efectivament $\langle g\rangle=\{e,g,g^2,\ldots,g^{m-1}\}$. Per això suposem $t>m$ i fent la divisió euclídea $t=mq+r$ amb $0\leq r<m$ es troba que $g^t=(g^m)^q g^r=g^r$ que pertany a aquest conjunt. I per últim si $g^m=e$ tindrem $gg^{m-1}$ i així tots els elements de la forma
+		$$\inv{g}=g^{m-1}$$
+		$$g^{-2}=g^{m-2}$$
+		$$\dots$$
+		també hi són. En particular serà $m=n$.
+			\end{proof}
+	\end{proposicio}
+El concepte de grup generat per un element indueix de forma natural la següent definició.
+\begin{definicio}
+	Direm que un grup $G$ és cíclic si existeix $g\in G$ de manera que $G=\langle g\rangle$. En aquest cas $g$ s'anomena generador de $G$.
+\end{definicio}
+Alguns exemples de grups cíclics són:
+\begin{enumerate}
+	\item Els enters $(\mathbb{Z,+})$ ja que $\mathbb{Z}=\langle1\rangle=\langle-1\rangle$.
+	\item Igualment $\mathbb{Z}/n\mathbb{Z}=\langle\bar{1}\rangle$.
+	\item Al grup dièdric $D_{2\cdot4}$ format per les transformacions que deixen invariant un quadrat al pla trobem el subgrup format per la identitat i les rotacions d'angles $\pi/2,\pi$ i $3\pi/2$. Aquest subgrup és cíclic.
+\end{enumerate}
+
+Així doncs observem també que si $G$ és cíclic tot element de $G$ serà de la forma $g^i$ per a $g$ generador de $G$ i cert $i$. Amb això $g^i g^j=g^j g^i=g^{i+j}$ de manera que $G$ és abelià.
+
+ D'altra banda es pot veure que tot subgrup de $G$ és cíclic també. Per això, si $H\leq G$ i $H=\{e\}$ o bé $H=G$ ja ho tenim. En cas contrari, sigui $g^k\in H$ tal que $g^m\notin H$ si $m<k$. Sigui $g^n\in H$ també llavors fent $n=kq+r$ amb $0\leq r<k$ tenim $g^r=g^{n-kq}=g^n(g^{-k})^q\in H$. Ha de ser $r=0$, en cas contrari es contradiu la tria de $k$. Per tant $H=\langle g^k\rangle$.
+
+Una altra propietat dels grups cíclics és que si $G$ és cíclic finit d'ordre $n$ llavors per cada divisor $d|n$ existeix un únic subgrup d'ordre $d$. Si $d\div n$ llavors és obvi que $\ordre{g^{n/d}}=d$. Sigui $H\leq G$ d'ordre $d$ pel d'abans sabem que és cíclic. Així $H=\langle g^r\rangle$ per cert $r$. Com que $g^{rd}=g^n=e$ ha de ser $n\div rd$. Per tant $r$ és de la forma $\lambda n/d$ per cert $\lambda$, i en particular $\langle g^r\rangle\subseteq\langle g^{n/d}\rangle$. El fet que $\ordre{g^r}=\ordre{g^{n/d}}$ implica $H=\langle g^{n/d}\rangle$.
+\section{Teorema de Lagrange}
+A $\mathbb{Z}$ teníem la relació d'equivalència donada per:
+$x\equiv y \mod n$ si i només si $y-x$ és múltiple de $n$. Anàlogament direm que $x\equiv y \mod H$ si i només si $\inv{x}y\in H$.
+\begin{proposicio}
+	Si $G$ és un grup i $H\leq G$ aleshores $x\equiv y \mod H$ és d'equivalència.
+	\begin{proof}
+	Com que $H$ és subgrup $e\in H$ i per tant $\inv{x}x=e\in H$, és a dir és reflexiva.
+	Igualment tenim que si $x\equiv y$ és perquè $\inv{x}y \in H$. Així doncs $\inv{(\inv{x}y)}\in H$ i per tant és simètrica.
+	Finalment si tenim $x\equiv y$ i $y\equiv z$ llavors $\inv{x}y\in H$ i $\inv{y}z\in H$. Fent el producte $\inv{x}y\inv{y}z=\inv{x}z$ arribem a $x\equiv z$ i en conseqüència és transitiva.
+	
+	És a dir, $x\equiv y \mod H$ és d'equivalència.	
+		\end{proof}
+\end{proposicio}
+Donada aquesta relació d'equivalència les classes d'equivalència vindran donades doncs per:
+\begin{align*}
+	\bar{x}=\{y\in G|\text{ }\inv{x}y\in H\}=\{y\in G|\text{ }y\in xH\}
+\end{align*}
+on definim $xH=\{xh\in G|\text{ }h\in H\}$. Observem doncs que $eH=\{eh\in G|\text{ }h\in H\}=H$
+\begin{teorema}(Teorema de Lagrange) Sigui $G$ un grup finit i $H\leq G$. Aleshores $|H|$ divideix $|G|$.
+	\begin{proof}
+		Per això emprarem l'aplicació donada per
+		$$H \longrightarrow xH $$ $$ h\longmapsto xh$$
+		que és clarament bijectiva amb $x\in G$ fixat. Amb això $|H|=|xH|$. Ara bé, com que la relació és d'equivalència $G$ serà la unió disjunta de totes les classes d'equivalència i per tant:
+		\begin{align*}
+			G=\bigcup_{x\in G}xH\Longrightarrow |G|=\sum_{x\in G} |xH|=|G/H||H|
+		\end{align*}
+		puix $|G/H|$ és el nombre de classes d'equivalència.
+	\end{proof}
+	
+\end{teorema}
+
+A partir d'ara de $|G/H|$ en direm índex $(G:H)$.
+\begin{col}
+	Tot grup d'ordre primer és cíclic
+	\begin{proof}
+		Suposem $|G|=p$ amb $p$ primer. Sigui $g\in G$ diferent del neutre i $H=\langle g\rangle$ llavors $|H|$ divideix $p$. Per tant $|H|=p$ i $G=\langle g\rangle$ ja que el fet que $|H|=1$ implicaria $g=e$. En conseqüència $G$ és cíclic.
+	\end{proof}
+\end{col}
+\begin{col}
+	Si $G$ té ordre $n$ i $g\in G$ aleshores l'ordre de $g$ divideix $n$.
+\end{col}
+\section{Subgrups normals i grup quocient}
+Hem vist que donat un grup $G$ i un subgrup de $G$ $H$ la relació d'equivalència $x\equiv y\mod H$ si i només si $\inv{x}y\in H$ dóna lloc a les classes d'equivalència $xH$ anomenades classes per la esquerra. Anàlogament podríem definir la relació també d'equivalència $x\equiv y \mod H$ si i només si $x\inv{y}\in H$. Aquesta dóna lloc a les anomenades classes per la dreta $Hx$. Observem doncs que si el grup és finit $|xH|=|H|=|Hx|$. Veiem alguns casos que mostren que $xH=Hx$ no és cert generalment.
+\begin{enumerate}
+	\item Sí que ho és si $G$ és abelià òbviament.
+	\item A $S_3$ si considerem $H=\langle (1,2)\rangle=\{id,(1,2)\}$ tenim:
+	$$(1,2,3)H=\{(1,2,3),(1,2,3)\circ (1,2)\}=\{(1,2,3),(1,3)\}$$
+	$$H(1,2,3)=\{(1,2,3),(1,2)\circ (1,2,3)\}=\{(1,2,3),(2,3)\}$$
+\end{enumerate}
+\begin{definicio}
+	Sigui $G$ un grup, $H$ subgrup de $G$. Diem que $H$ és normal a $G$ si per a tot $x\in G$ es dóna que $xH=Hx$. Escriurem $H\unlhd G$.
+\end{definicio}
+\begin{definicio}
+	Direm que un grup $G$ és simple si tots els únics subgrups normals que té són $\{e\}$ o bé tot $G$, ço és, els seus subgrups impropis.
+\end{definicio}
+\begin{proposicio}
+	Donat $H\leq G$ llavors són equivalents:
+	\begin{enumerate}
+		\item $xH=Hx$ per a tot $x\in H$
+		\item $\inv{x}Hx=H$ per a tot $x\in G$
+		\item $\inv{x}Hx\subseteq H$ per a tot $x\in G$
+		\begin{proof}
+			Veiem $1\Longrightarrow 2$.  Fem primer $\inv{x}Hx\subseteq H$. Sigui $x\in G$ i $h\in H$ tenim que $\inv{x}hx=\inv{x}xh'=h'\in H$ per cert $h'\in H$. Fem ara $H\subseteq \inv{x}Hx$. Sigui $h\in H$ llavors per tot $x\in G$ tenim $xh=h'x$ per cert $h'\in H$. Això implica que $h= \inv{x}h'x\in\inv{x}Hx$.
+			
+			$2\im 3$ ja ho tenim.
+			
+			I per $3\im 1$ tenim que $xH\subseteq Hx$ ja que si $x\in G$ i $h\in H$, $\inv{x}hx\in H$ i per tant $xh=h'x\in Hx$ per cert $h'\in H$. L'altra inclusió és anàloga.
+		\end{proof}
+	\end{enumerate}
+\end{proposicio}
+Si $a,x$ són elements d'un grup anomenarem a l'element $\inv{a}xa$ el conjugat de $x$ per $a$. 
+
+Alguns exemples de subgrups normals són:
+\begin{enumerate}
+	\item Si $G$ és abelià tot subgrup de $G$ és normal.
+	\item Fent $G=GL_n(K)$ i prenent el subgrup $SL_n(K)=\{A\in GL_n(K)|\text{ }det(A)=1\}$ observem que donada $A\in SL_n(K)$ i $P\in GL_n(K)$ llavors $\det(\inv{P}AP)=\inv{\det(P)}\det(A)\det(P)=\det(A)=1$. Per tant $SL_n(K)\unlhd GL_n(K)$.
+\end{enumerate}
+\begin{definicio}
+Anomenem centre de $G$ al conjunt:
+$$Z(G)=\{x\in G|\text{ } xg=gx \text{ per tot }g\in G\}$$
+\end{definicio}
+Podem comprovar que $Z(G)\unlhd G$. Efectivament, sigui $x\in G$ i $z\in Z(G)$ tenim que $\inv{x}zx=\inv{x}xz=z\in Z(G)$. Alguns exemples:
+\begin{enumerate}
+	\item $Z(S_3)=\{id\}$
+	\item $Z(GL_2(K))=\{\lambda\cdot I_2|\text{ }\lambda\neq 0\}$
+\end{enumerate}
+Trivialment tenim que si $G$ és commutatiu llavors $Z(G)=G$.
+
+Fem ara $H\unlhd G$ i considerem el conjunt quocient $G/H=\{xH|\text{ }x\in G\}$.
+\begin{definicio}
+Definim $\bar{x}\cdot\bar{y}=\bar{xy}$. Equivalentment tenim $(xH)(yH)=(xy)H$.
+\end{definicio}
+\begin{proposicio}
+	L'operació és ben definida i $G/H$ amb aquesta és un grup.
+	\begin{proof}
+		Veiem que no depén del representant. Siguin $x_1\in \bar{x}$ i $y_1\in\bar{y}$ ens preguntem si $\bar{x_1}\cdot\bar{y_1}=\bar{xy}$, ço és si $x_1y_1,xy$ estan relacionats. Fem doncs $xy\inv{(x_1y_1)}=xy\inv{y_1}\inv{x_1}=xh\inv{x_1}$ amb $h\in H$. Com que $H$ és normal tindrem per certs $h',h''\in H$ que $xh\inv{x_1}=x\inv{x_1}h'=h''h'\in H$. I per tant l'operació és ben definida.
+		
+		Veiem ara doncs que $G/H$ és grup.
+		L'operació és associativa per definició. D'altra banda el neutre serà la classe del neutre de $G$ ja que $\bar{e}\cdot\bar{x}=\bar{ex}=\bar{x}$ i $ \bar{x}=\bar{ex}=\bar{xe}=\bar{x}\cdot\bar{e}$. Procedint anàlogament pels elements inversos tenim per $x\in G$: $\bar{x}\cdot\bar{\inv{x}}=\overline{x\inv{x}}=\overline{e}$ i $\bar{e}=\overline{\inv{x}x}=\bar{\inv{x}}\cdot\bar{x}$.
+	\end{proof}
+\end{proposicio}
+Observem ara que si $G$ és finit $|G/H|=(G:H)=\frac{|G|}{|H|}$.
+\section{Morfismes de grups}
+\begin{definicio}
+Siguin $G_1$ i $G_2$ grups. Una aplicació $f:G_1\longrightarrow G_2$ és morfisme de grups si per tot $x,y\in G_1$ es dóna $f(xy)=f(x)f(y)$. A més a més si el morfisme:
+\begin{itemize}
+	\item $f$ és injectiu, s'anomena monomorfisme.
+	\item $f$ és exhaustiu, s'anomena epimorfisme.
+	\item $f$ és bijectiu, s'anomena isomorfisme.
+	\item $f:G_1\longrightarrow G_1$, s'anomena endomorfisme.
+	\item és bijectiu i $f:G_1\longrightarrow G_1$, s'anomena automorfisme.
+\end{itemize}
+\end{definicio}
+Alguns exemples de morfismes de grups són:
+\begin{enumerate}
+	\item $id:G\longrightarrow G$ automorfisme. Igualment són morfismes les aplicacions lineals entre espais vectorials.
+	\item Fixat $a\in\mathbb{Z}$, $$f:\mathbb{Z}\longrightarrow\mathbb{Z}$$ $$x\longmapsto ax$$ és morfisme ja que: $a(x+y)=ax+ay$. A més a més tot morfisme de grups a $\mathbb{Z}$ és d'aquesta forma.
+	\item La projecció canònica $$\pi:Z\longrightarrow\mathbb{Z}/n\mathbb{Z}$$ $$x\longmapsto\bar{x} $$ és epimorfisme.
+	\item L'aplicació determinant també és morfisme de grups puix $\det(AB)=\det(A)\det(B)$.
+	\item La conjugació. Donat $G$ grup i fixat $a\in G$ considerem:
+	$f_a:G\longrightarrow G$
+	donada per $f_a(x)=\inv{a}xa$. Efectivament és morfisme en tant que $f_a(xy)=\inv{a}xya=\inv{a}xa\inv{a}ya=f_a(x)f_a(y)$. Igualment és injectiu ja que el fet que $f_a(x)=f_a(y)$ és equivalent a $\inv{a}xa=\inv{a}ya\Leftrightarrow a\inv{a}xa\inv{a}=a\inv{a}ya\inv{a}\Leftrightarrow x=y$. Per veure que és exhaustiva donat $b\in G$ només hem de considerar $f_a(ab\inv{a})=\inv{a}b\inv{a}a=b$. Tenim doncs que $f_a$ és automorfisme.
+\end{enumerate}
+
+Dues propietats elementals dels morfismes de grups són:
+\begin{enumerate}
+	\item Si $f:G_1\longrightarrow G_2$ i $g:G_2\longrightarrow G_3$ són morfismes de grup llavors $g\circ f$ també ho és.
+	\item Si $f:G_1\longrightarrow G_2$ és isomorfisme llavors $\inv{f}:G_2\longrightarrow G_1$ és isomorfisme i $\inv{(\inv{f})}=f$.
+\end{enumerate}
+En general si dos grups tenen propietats estructurals diferents no poden ser isomorfs.
+\begin{proposicio}
+	Sigui $f:G_1\longrightarrow G_2$ un morfisme de grups llavors:
+	\begin{enumerate}
+		\item $f(e_1)=e_2$ amb $e_1,e_2$ element neutres de $G_1,G_2$ respectivament.
+		\item Si $x\in G_1$ llavors $f(\inv{x})=\inv{(f(x))}$	\end{enumerate}
+	\begin{proof}
+		Per veure 1 tenim $f(e_1e_1)=f(e_1)f(e_1)=f(e_1)$ i amb això $f(e_1)=f(e_1)f(e_1)\inv{(f(e_1))}=f(e_1)(f(e_1))^{-1}=e_2$.
+		
+		D'altra banda per 2 es troba que, $f(x\inv{x})=f(x)\inv{(f(x))}=f(e)=e$ i anàlogament per l'altra banda, la qual cosa implica que $f(\inv{x})=(f(x))^{-1}$.
+	\end{proof}
+\end{proposicio}
+\begin{definicio}
+	Sigui $f$ un morfisme $G_1\longrightarrow G_2$.
+	
+	Definim el nucli de $f$ com $\ker(f)=\{x\in G_1|\text{ }f(x)=e_{2}\}$.
+	
+	Definim la imatge de $f$ com $\ima(f)=\{f(x)|\text{ }x\in G_1\}$.
+\end{definicio}
+\begin{proposicio}Sigui $f:G_1\longrightarrow G_2$ un morfisme de grups.
+El nucli de $f$ és un subgrup normal de $G_1$ i la imatge de $f$ és un subgrup de $G_2$.
+\begin{proof}
+	Veiem que $\ker(f)\leq G_1$. Siguin $x,y\in G_1$ tenim que $f(x\inv{y})=f(x)f(\inv{y})=f(x)\inv{f(y)}=e_{2}e_{2}=e_{2}$ i per tant $x\inv{y}\in\ker(f)$ que és un subgrup. Veiem ara $\ker(f)\unlhd G_1$. Sigui $k\in\ker(f)$ i $x\in G$ fem $f(\inv{x}kx)=f(\inv{x})f(k)f(x)=f(\inv{x})f(x)=f(\inv{x}x)=f(e_{1})=e_2$ i per tant $\inv{x}kx\in\ker(f)$.
+	
+	Veiem ara que $\ima(f)\leq G_2$. Siguin $f(x),f(y)\in\ima(f)$ fem $f(x)\inv{f(y)}=f(x)f(\inv{y})=f(x\inv{y})\in\ima(f)$ ja que $G_1$ és grup. 
+\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Sigui $f:G_1\longrightarrow G_2$ un morfisme de grups. Aleshores:
+	\begin{enumerate}
+		\item f és injectiu si i només si $\ker(f)=\{e_1\}$.
+		\item f és exhaustiu si i només si $\ima(f)=G_2$.
+	\end{enumerate}
+\begin{proof}
+	2 és la definició d'exhaustivitat.
+	
+	Per veure 1 suposem primer que $f$ és injectiu. Sigui $x\in\ker(f)$ llavors $f(e_1)=f(x)=e_2$ i per tant $e_1=x$. Recíprocament, si suposem que $\ker(f)={e_1}$ i que $f(x)=f(y)$ tenim doncs $f(x\inv{y})=f(x)f(\inv{y})=f(x)\inv{f(y)}=f(y)\inv{f(y)}=e_2$. Així doncs ha de ser $x\inv{y}=e_1\Leftrightarrow x=y$ i $f$ és injectiu.
+\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Sigui $f:G_1\longrightarrow G_2$ un morfisme de grups. Aleshores:
+	\begin{enumerate}
+		\item Si $H\leq G_1$ llavors $f(H)\leq G_2$.
+		\item Si $K\leq G_2$ llavors $\inv{f}(K)\leq G_2$.
+		\item Si $f$ és epimorfisme i $H\unlhd G_1$ llavors $f(H)\unlhd G_2$.
+		\begin{proof}
+		Veiem 1. Siguin $f(x),f(y)\in f(H)$ llavors $f(x)\inv{f(y)}=f(x)f(\inv{y})=f(x\inv{y})\in f(H)$ ja que $H$ és subgrup.
+		
+		Per veure 2 posem $D=\inv{f}(K)=\{x\in G_1|\text{ }f(x)\in K\}$. Siguin $x,y\in D$ fem $f(x\inv{y})=f(x)\inv{f(y)}\in K$. Per tant $x\inv{y}\in D$.
+		
+		A 3 ja sabem que $f(H)\leq G$. Sigui $f(h)\in f(H)$ i sigui $y\in G_2$ com que $f$ és epimorfisme existeix $x\in G_1$ tal que $f(x)=y$. Així $\inv{y}f(h)y=\inv{f(x)}f(h)f(x)=f(\inv{x})f(h)f(x)=f(\inv{x}hx)$ que pertany a $f(H)$ en tant que per ser subgrup normal $H$, $\inv{x}hx$ pertany a $H$.		\end{proof} 
+	\end{enumerate}
+\end{proposicio}
+\begin{teorema}
+		Sigui $f:G_1\longrightarrow G_2$ un morfisme de grups. Aleshores $G_1/\ker(f)\cong\ima(f)$. En particular si $f$ és epimorfisme tindrem $G_1/\ker(f)\cong G_2$.
+		\begin{proof}
+			Definim $\tilde{f}:G_1/\ker(f)\longrightarrow G_2$ donada per $\tilde{f}(\bar{x})=f(x)$ per tot $x\in G_1$.
+			
+			Veiem primerament que és ben definida, és a dir que $x\equiv y $ implica $f(x)=f(y)$. Si $x,y$ estan relacionats llavors $\bar{x}=\bar{y}\Leftrightarrow y\in x\ker(f)$. Així doncs tenim que existeix $k\in\ker(f)$ tal que $y=xk$. D'aquesta manera $f(y)=f(xk)=f(x)f(k)=f(x)$ ja que $k\in\ker(f)$.
+			
+			Veiem a continuació que es tracta d'un morfisme de grups. Per això fem $\tilde{f}(\bar{xy})=f(xy)=f(x)f(y)=\tilde{f}(x)\tilde{f}(y)$.
+			
+			És injectiva. Suposem $\tilde{f}(\bar{x})=\tilde{f}(\bar{y})\Leftrightarrow f(x)=f(y)\Leftrightarrow f(x)\inv{f(y)}=f(y)\inv{f(y)}=e_2\Leftrightarrow f(x\inv{y})=e_2$. Amb això $x\inv{y}\in\ker(f)\Leftrightarrow \bar{x}=\bar{y}$.
+			
+			A més a més és exhaustiva ja que $\ima(\tilde{f})=\ima(f)$.
+			
+			En conseqüència tenim:
+			$$G_1/\ker(f)\cong\ima(f)$$
+		\end{proof}
+\end{teorema}
+
+\begin{teorema}(Teorema de classificació de grups cíclics)
+	Sigui $G$ un grup cíclic. Si $|G|$ és infinit, llavors $G\cong\mathbb{Z}$; si $|G|=n$, llavors $G\cong\mathbb{Z}/n\mathbb{Z}$.
+	\begin{proof}
+		Posem $G=<g>$ per $g\in G$ generador. 
+		
+		Si $G$ té ordre infinit considerem $$f:\mathbb{Z}\longrightarrow G$$ $$\quad\quad t\longmapsto g^t$$ que és clarament bijectiva. Veiem que és isomorfisme de grups fent $f(t_1+t_2)=g^{t_1+t_2}=g^{t_1}g^{t_2}=f(t_1)f(t_2)$. Per tant $\mathbb{Z}\cong G$.
+		
+	Si ara $|G|=n$ és finit considerem $$\tilde{f}:\mathbb{Z}/n\mathbb{Z}\longrightarrow G$$ $$\quad\quad\quad \bar{t}\longmapsto g^t$$
+	És ben definida en tant que si $\bar{t}=\bar{l}$ llavors $t-l=\alpha n$ i així $\tilde{f}(\bar{l})=g^l=g^{t-\alpha n}=g^tg^{n^{(-\alpha)}}=g^t=\tilde{f}(t)$. A més és morfisme de grups puix $\tilde{f}(\overline{t_1 +t_2})=g^{t_1+t_2}$ igual que abans. D'altra banda és òbviament exhaustiva i és injectiva ja que si $\tilde{f}(\overline{t_1})=\tilde{f}(\overline{t_2})\Leftrightarrow g^{t_1}=g^{t_2}\Leftrightarrow g^{t_1-t_2}=e$ i amb això $t_1-t_2=\alpha n\Leftrightarrow \overline{t_1}=\overline{t_2}$. Per tant és un isomorfisme de grups i $\mathbb{Z}/n\mathbb{Z}\cong G$.
+	\end{proof} 
+\end{teorema}
+\subsection{Tres teoremes d'isomorfia}
+\begin{teorema}{(Primer teorema d'isomorfia)}
+	Sigui $f:G_1\longrightarrow G_2$ epimorfisme de grups. Aleshores:
+	\begin{enumerate}
+		\item $G_1/\ker(f) \cong G_2$
+		\item L'aplicació $\varphi:\{H\leq G_1 |\text{ }\ker(f)\leq H\}\longrightarrow \{\text{subgrups de } G_2\}$ donada per $\varphi(H)=f(H)$ és bijectiva.
+		\item L'aplicació $\varphi:\{H\unlhd G_1 |\text{ }\ker(f)\leq H\}\longrightarrow \{\text{subgrups normals de } G_2\}$ donada per $\varphi(H)=f(H)$ és bijectiva.
+	\end{enumerate}
+\begin{proof}
+	La demostració de $1$ ja l'hem feta.
+	
+	Per veure 2 primer comprovem que $\varphi$ és ben definida. Hem de veure doncs que la imatge de $H\leq G_1$ tal que el nucli hi està contingut és un subgrup de $G_2$. Siguin $x,y\in H$ fem $f(x)\inv{f(y)}=f(x\inv{y})\in f(H)$ ja que $x\inv{y}\in H$. Per tant $f(H)\leq G_2$. 
+	
+	Veiem ara que és injectiva. Suposem $f(H)=f(H')$. Hem de veure que $H=H'$. Sigui $h\in H$ llavors $f(h)\in f(H')$ per hipòtesi. Així $f(h)=f(h')$ per cert $h'\in H'$. Ara $f(\inv{(h')}h)=e$ de manera que $\inv{(h')}h\in \ker(f)\leq H'\Leftrightarrow h'h\in \ker(f)\Leftrightarrow h\in H' $. Tenim $H\subseteq H'$ i anàlogament $H'\subseteq H$. Per tant, és injectiva.
+	
+	Veiem ara que és exhaustiva. Sigui $K$ del conjunt d'arribada fem $H=\inv{f}(K)$. Si $x\in\ker(f)$ llavors $f(x)=e\in K$ i $x\in \inv{f}(K)$.
+	
+	Per tant és $\varphi$ és bijectiva.
+	
+	Per veure 3 només hem de comprovar que $\varphi$ envia un subgrup normal a un subgrup normal. Sigui $H\unlhd G_1$ tal que $\ker(f)\in G_1$ i sigui $x\in G_1$ i $h\in H$ fem $\inv{f(x)}f(h)f(x)=f(\inv{x}hx)\in f(H)$ ja que $H$ és normal. En conseqüència $f(H)$ és normal.
+\end{proof}
+\end{teorema}
+\begin{col}
+	Sigui $G$ un grup i $H$ un subgrup normal de $G$. Aleshores la correspondència $K\rightarrow \pi(K)=K/H$ és una bijecció entre els subgrups de $G$ que contenen $H$ i els subgrups $G/H$ i també entre els subgrups normals de $G$ que contenen $H$ i els subgrups normals de $G/H$. És a dir, els subgrups de $G/H$ són de la forma $K/H$ amb $K$ subgrup de $G$.
+\end{col}
+
+També podem considerar productes de subgrups. Per exemple a $\mathbb{Z}$ donats $(n), (m)$ sabem que $(n)+(m)=(d)$ on $d=\mcd(m,n)$. O donat un espai vectorial sobre un cos i dos subespais, la suma dels dos subespais també és un producte de subgrups. Però, el resultat no és sempre un subgrup.
+
+Un exemple que mostra això és el producte dels subgrups de $S_3$, $H=\{\id,(1,2)\}$ i $K=\{\id,(1,3)\}$. Tenim doncs $H\cdot K=\{\id,(1,2),(1,3),(1,3,2)\}$ i com que $|H\cdot K|=4$ no divideix 6, $H\cdot K$ no pot ser subgrup de $S_3$. Això planteja la pregunta de quan el producte de subgrups dóna lloc a un subgrup.
+\begin{proposicio}
+	$G$ grup, $H$ i $K$ subgrups de $G$. Si $K\unlhd G$, aleshores $H\cdot K$ és un subgrup de $G$ i a més és el mínim subgrup de $G$ que conté $H$ i $K$.
+	\begin{proof}
+		Siguin $x,y\in H\cdot K$ escriurem $x=hk$ i $y=h'k'$ amb $h,h'\in H$ i $k,k'\in K$. Així doncs fent $x\inv{y}=hk\inv{(h'k')}=h(k\inv{(k')})\inv{(h')}$ com que $K$ és normal i $(k\inv{(k')})\in K$ tindrem $x\inv{y}=(h\inv{(h')})k''\in H\cdot K$ per cert $k''\in K$. Per tant $H\cdot K$ és subgrup de $G$.
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	$G$ grup, $H$ i $K$ subgrups de $G$. Si $K\unlhd G$ i $H\unlhd G$, aleshores $H\cdot K$ és un subgrup normal de $G$
+\end{proposicio}
+\begin{teorema}{(Segon teorema d'isomorfia)} Sigui $G$ un grup, $H,K$ subgrups de $G$ amb $K\unlhd G$. Aleshores:
+$$H\cdot K/K\cong H/H\cap K$$
+\end{teorema}
+Observem primerament que $H\cdot K$ és subgrup de $G$ ja que $K\unlhd G$ i $K$ és normal a $H\cdot K$ en tant que és normal a tot $G$. Sabem que $H\cap K\leq H$, veiem que $H\cap K$ és normal a $H$. Sigui $h\in H$ i $x\in H\cap K$ en particular $x\in K$. Aleshores $\inv{h}xh=\inv{h}hx'=x'\in K$ per cert $x'\in K$. Però $\inv{h}xh\in H$ amb la qual cosa $\inv{h}xh \in H\cap K$ i $H\cap K\unlhd H$.
+
+Observem també que si $G$ és abelià podem escriure en notació additiva:
+$$H+ K/K\cong H/H\cap K$$
+\begin{proof}
+	Definim:
+	$$f:H\cdot K\longrightarrow H/H\cap K$$
+	$$x=hk\longmapsto \bar{h}\quad\qquad$$
+	Veiem primerament que està ben definida. Suposem que $h_1k_1=h_2k_2$. Així $h_1k_1=h_2k_2\implies\inv{h_2}h_1=k_2\inv{k_1}\in H\cap K\Rightarrow \bar{h_1}=\bar{h_2}$ a $H/H\cap K$. 
+	
+	$f$ és exhaustiva ja que una antiimatge per $\bar{h}$ és $h=he$.
+	
+	$f$ és morfisme de grups ja que si $x=hk$ i $y=h'k'$ llavors $xy=h(kh')k'=hh'k''k'$ per cert $k''\in K$ puix $K$ és normal i així $f(xy)=f(hh'k''k')=\bar{hh'}=\bar{h}\cdot \bar{h'}=f(x)f(y)$. 
+	
+	Veiem ara que $\ker(f)=K$. Sigui $k\in K$ llavors $f(k)=f(ek)=\bar{e}$ i per tant $k\in \ker(f)$, ço és $K\subseteq \ker(f)$. Sigui ara $x\in\ker(f)$ llavors $f(x)=\bar{e}$ i $x=hk$ per $h\in H$ i $k\in K$. Com que $f(x)=f(hk)=\bar{h}$ tenim que $eh=h\in H\cap K$ de manera que $h\in K$ i $x\in K$. Així $\ker(f)\subseteq K$, $\ker(f)= K$ i pel primer teorema d'isomorfia tenim el resultat.
+\end{proof}
+\begin{teorema}{(Tercer teorema d'isomorfia)}
+	Sigui $G$ un grup i $H,K$ subgrups normals de $G$ amb $K\leq H$. Aleshores:
+	$$G/H\cong (G/K)/(H/K)$$
+\end{teorema}
+Observem en aquest cas que com que $K\unlhd G$ serà també $K\unlhd H$. D'altra banda com que $H\unlhd G$ tindrem que donats $g\in G$ i $h\in H$ llavors $hg=gh'$ per cert $h'\in H$. Així $(hK)(gK)=(hg)K=(gh')K$ i també serà $H/K\unlhd G/K$ i per tant té sentit l'enunciat.
+\begin{proof}
+	Considerem l'aplicació $$f:G/K\longrightarrow G/H$$ $$\qquad gK\longmapsto gH$$
+	És ben definida ja que $K\leq H$ i evidentment és epimorfisme pel mateix motiu. Veiem que $\ker(f)=H/K$. Sigui $h\in H$ tenim que $f(hK)=hH=eH=\bar{e}$ de manera que $hK\in\ker(f)$. Sigui ara $xK\in \ker(f)$ tenim que $f(xK)=xH$ amb la qual cosa ha de ser $x\in H$ i per tant $xK\in H/K$. Pel primer teorema d'isomorfia tenim el resultat. 
+\end{proof}
+\subsection{Un teorema de representació}
+Considerem ara un conjunt $X$ no buit. Sigui $S_X=\{\sigma|\text{ }\sigma \text{ és bijectiva}\}$.Evidentment $S_X$ és un grup amb la composició. A més si $X$ és finit tenim $S_X=S_n$.
+\begin{teorema}{(Teorema de Cayley)}
+	Sigui $G$ un grup. Aleshores $G$ és isomorf a un subgrup de $S_G$. En particular si $G$ té $n$ elements, $G$ és isomorf a un subgrup de $S_n$.
+	\begin{proof}
+	Definim:
+	$$\varphi:G\longrightarrow S_G$$ $$\quad g\longmapsto l_g$$ on $$l_g:G\longrightarrow G$$
+	$$\qquad x\longmapsto gx$$ és bijectiva. Veiem que $\varphi$ és morfisme de grups.
+	
+	D'una banda tenim $l_{g_1g_2}(x)=g_1g_2x$ i d'altra $(l_{g_1}\circ l_{g_2})(x)=l_{g_1}(g_2x)=g_1g_2x$. D'aquesta forma tenim $l_{g_1g_2}=\varphi(g_1 g_2)=\varphi(g_1)\varphi(g_2)=l_{g_1}\circ l_{g_2}$.
+	
+	Veiem que $\varphi$ és injectiva. Suposem $\varphi(g_1)=\varphi(g_2)\implies l_{g_1}=l_{g_2}\implies g_1x=g_2x \quad \forall x\in G$. En particular $g_1 e=g_1=g_2e=g_2$. Per tant $\varphi$ és injectiva i llavors $\ker(f)=\{e\}$.
+	
+	En conseqüència $G\cong \ima(\varphi)\leq S_G$.
+	\end{proof}
+\end{teorema}
+\section{Sobre els subgrups d'un grup finit. Els teoremes de Sylow}
+\subsection{Accions d'un grup sobre un conjunt}
+\begin{definicio}
+	Sigui $G$ un grup i $X$ un conjunt no buit. Una acció de $G$ sobre $X$ és una aplicació $$\varphi:G\times X\longrightarrow X$$
+	$$\qquad(g,x)\longmapsto gx$$ que compleix:
+	\begin{enumerate}
+		\item $\varphi(e,x)=ex=x$ per tot $x\in X$.
+		\item $(g_1 g_2)x=g_1(g_2x)$ per tot $g_1,g_2\in G,x\in X$. Equivalentment $(g_1 g_2 x)=\varphi(g_1, \varphi(g_2,x))$ per tot $g_1, g_2\in G,x\in X$.
+	\end{enumerate}
+\end{definicio}
+Alguns exemples d'accions són:
+\begin{enumerate}
+	\item $X$ conjunt no buit. Denotem $S_X=\{\sigma:X\rightarrow X|\text{ }\sigma\text{ és bijectiva}\}$. Aleshores $S_{X}$ actua sobre $X$ amb $\sigma x=\sigma (x)$.
+	\item Sigui $G=\mathbb{Z}$ i $X=\zn$. Si $g\in\z,\bar{x}\in\zn$ llavors $g\bar{x}=\bar{g+x}$ és una acció.
+	\item $G$ grup i $X=G$. Si $g\in G,x\in X$ llavors l'operació del grup  $gx=g\cdot x$ és una acció.
+	\item Sota les mateixes condicions podem definir l'acció per conjugació i si $g\in G,x\in X$ llavors $gx=gx\inv{g}$ és una acció.
+\end{enumerate}
+\begin{definicio}
+	Si $G$ actua sobre $X$ diem que $X$ és un $G$-conjunt.
+\end{definicio}
+Suposarem ara que $X$ és un $G$-conjunt i introduïm la següent relació.
+	Si $x_1,x_2\in X$ diem que $x_1\sim x_2$ si i només si existeix $g\in G$ tal que $x_2=g x_1$.
+
+\begin{proposicio} La relació $\sim$ és d'equivalència
+	\begin{proof}
+		És reflexiva en tant que prenent el neutre de $G$ tenim $x_1=ex_1=x_1$. Igualment si $x_1\sim x_2$ existeix $g\in G$ tal que $x_1=gx_2$. Com que $\inv{g}\in G$, podem fer actuar $\inv{g}$ de manera que $\inv{g}x_1=\inv{g}(gx_2)=(\inv{g}g)x_2=ex_2=x_2$ i tenim $x_2\sim x_1$. Per últim és transitiva ja que si $x_1=g_1 x_2$ i $x_2=g_2 x_3$ aleshores $x_1=g_1 (g_2 x_3)=(g_1 g_2)x_3$ i per tant $x_1\sim x_3$. 
+	\end{proof}
+\end{proposicio}
+\begin{definicio}
+	Sigui $x\in X$. Anomenem òrbita de $x$ a la classe d'equivalència $\bar{x}$ sota aquesta relació, és a dir:
+	$$\orb(x)=\bar{x}=\{x'\in X|\text{ }x'=gx\text{ per cert }g\in G\}$$
+	Igualment, anomenem estabilitzador de $x$ al conjunt:
+	$$G_x=\{g\in G|\text{ }gx=x\}$$
+\end{definicio}
+\begin{proposicio}
+	$G_x$ és un subgrup de $G$.\begin{proof}
+		$e\in G_x$ ja que $ex=e$ per definició.
+		
+		Suposem $g_1,g_2\in G_x$. Aleshores $(g_1g_2)x=g_1(g_2 x)=g_1 x=x$.
+		
+		Sigui ara $g\in G$ hem de veure que $\inv{g}\in G_x$. Tenim que $gx=x\Leftrightarrow \inv{g}(gx)=\inv{g}x\Leftrightarrow (\inv{g}g)x=\inv{g}x\Leftrightarrow ex=x=\inv{g}x$ i per tant $\inv{g}\in G_x$. En conseqüència $G_x\leq G$.
+	\end{proof}
+\end{proposicio}
+
+Observem ara que $\orb(x)=Gx$ que no és el mateix que l'estabilitzador $G_x$.
+\begin{proposicio}
+	Suposem $G$ i $X$ finits. Sigui $x\in X$. Aleshores $|Gx|=|\orb(x)|=(G:G_x)$ amb l'índex del conjunt quocient $G/G_x=\{gG_x|\text{ }g\in G\}$.
+	\begin{proof}
+		Considerem l'aplicació:$$\qquad f:G/G_x\longrightarrow \orb(x)=Gx$$
+		$$\bar{g}=gG_x\longmapsto gx\qquad$$
+Veiem que està ben definida. Suposem $g'\in gG_x$, llavors $g'=gg''$ per un cert $g''\in G_x$. I tenim $g'x=(gg'')x=g(g''x)=gx$.
+
+Veiem ara qeu $f$ és injectiva. Suposem $gx=g'x\Leftrightarrow \inv{g}gx=\inv{g}g'x\Leftrightarrow x=(\inv{g}g')x$. Per tant tenim que $\inv{g}g'\in G_x$ i en conseqüència $\bar{g}=\bar{g'}$.
+
+D'altra banda $f$ és clarament exhaustiva ja que una antiimatge s'obté prenent classe de l'element de $\orb(x)$ en qüestió.
+\end{proof}
+\end{proposicio}
+Posem un exemple. Suposem $X=G$ finit i l'acció donada per la conjugació $gx=gx\inv{g}$. Així doncs $\orb(x)=\{x\}\Leftrightarrow gx=x \quad\forall g\Leftrightarrow gx\inv{g}=x \quad\forall g\Leftrightarrow gx=xg \quad\forall g$. És a dir, si $x\in Z(G)$ 
+
+Generalment, $G_x=\{g\in G|\text{ }gx=x\}=\{g\in G| \text{ }gx\inv{g}=x\Leftrightarrow gx=xg\}$ s'anomena el \emph{centralitzador} de $x$ a $G$,  $C_G(x)$.
+
+Sigui ara $G$ finit i $X$ finit amb $X$ un $G$-conjunt. Considerem les òrbites dels elements de $X$. Suposem que en tenim $r$, $\orb(x_1),\orb(x_2),\ldots,\orb(x_r)$, diferents 2 a 2. Tenim doncs $|X|=|\orb(x_1)|+|\orb(x_2)|+\ldots+|\orb(x_r)|$. Algunes d'aquestes poden tenir un sol element. Suposant que són les $0\leq s\leq r$ primeres:
+$$|X|=s+\sum_{i=s+1}^{r}|\orb(x_i)|$$
+Com que acabem de veure que $\orb(x)=\{x\}\Leftrightarrow Gx=x$ amb $x$ fix pels elements de $G$ podem definir:
+$$X_G=\{x\in X|\text{ }gx=x\text{ per tot }g\in G\}\subseteq X$$
+Per tant per la proposició anterior tenim l'\emph{equació de les òrbites}:
+$$|X|=|X_G|+\sum_{i=s+1}^{r}|\orb(x_i)|=|X_G|+\sum_{i=s+1}^{r}(G:G_{x_i})$$
+
+En particular per l'acció donada per la conjugació tenim:
+$X_G=Z(G)$ i així:
+$$|X|=|G|=|Z(G)|+\sum_{i=s+1}^{r}(G:C_G(x_i))$$
+\begin{definicio}
+	Sigui $p$ un primer. Direm que $G$ és un $p$-grup si $|G|=p^n$ amb $n\geq 1$.
+\end{definicio}
+\begin{proposicio}
+	Sigui $G$ un $p$-grup i $X$ un $G$-conjunt finit. Aleshores:$$|X|\equiv|X_G|\mod p$$
+	\begin{proof}
+ 		Tenim $(G : G_{x_i}) \big| |G|$ amb la qual cosa $(G:G_{x_i})=p^t$ per a $t\geq 1$. En conseqència $|X|-|X_G|$ és múltiple de $p$ per l'equació de les òrbites.
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Si $G$ és un $p$-grup, aleshores $Z(G)$ no és trivial. En particular com que $Z(G)\unlhd G$, $G$ no és simple.
+	\begin{proof}
+		$|G|-|Z(G)|$ és múltiple de $p$ per l'equació de les òrbites i $|G|=p^n$ amb $n\geq 1$. Per tant $|Z(G)|$ és múltiple de $p$ i no és $0$. En conseqüència $Z(G)$ no és trivial.
+	\end{proof}
+\end{proposicio}
+\begin{col}
+	Si $p$ és primer i $G$ és un grup amb $p^2$ elements llavors $G$ és abelià.
+	\begin{proof}
+		Considerem $Z(G)\ne \{e\}$ per la proposició anterior. Pel teorema de Lagrange $|Z(G)|\big| p^2\Rightarrow \ordre{Z(G)}=p$ o bé $\ordre{Z(G)}=p^2$.
+		
+			Si $\ordre{Z(G)}=p^2$ i ja ho tenim.
+			
+			Si $\ordre{Z(G)}=p$ fem $G/Z(G)$ que té ordre $p$. Com que $p$ és primer tindrem $G/Z(G)=\langle\bar{g}\rangle$ per cert $g\in G$. Aleshores si $x\in G$, $\bar{x}=\bar{g}^r$ per cert $r\Rightarrow x\in g^r Z(G)\implies x=g^r z$ per $z\in Z(G)$. Sigui ara $y\in G$ pel mateix raonament tindrem $y=g^sz'$ amb $z'\in Z(G)$ i així $xy=g^rzg^s z'=g^sz'g^rz=yx$.
+	
+\end{proof}
+\end{col}
+\begin{col}
+	Hi ha només dos grups d'ordre $p^2$ amb $p$ primer (tret d'isomorfisme).
+	\begin{proof}
+		Sigui $G$ un grup d'ordre $p^2$. Sigui $g\in G$ diferent del neutre $\ordre{g}>1$. Pel teorema de Lagrange $\ordre{g}\div p^2$. Així:
+		\begin{itemize}
+			\item Si $\ordre{g}=p^2$ tenim $\langle g\rangle =G$  i pel teorema de classificació dels grups cíclics $$G\cong \mathbb{Z}/p^2\mathbb{Z}$$
+			\item Suposem doncs que $G$ no és cíclic. Amb això si $x\neq e$ tindrem $\ordre{x}=p$. Llavors $\langle x\rangle \leq G$ i podem prendre $y\in G,y\neq e,y\notin\langle x\rangle$ de forma que $\ordre{y}=p$ igualment. Observem doncs que $\langle x\rangle\cap\langle y \rangle =\{e\}$ ja que l'ordre del grup intersecció és 1 o $p$ pel teorema de Lagrange. Per la tria de $b$ ha de ser 1.   Considerem l'aplicació $$\varphi:\langle x\rangle \times \langle y\rangle \longrightarrow G$$ $$\qquad\quad(a,b)\longmapsto ab$$
+			Com que $G$ és abelià, $\varphi$ és morfisme. D'altra banda, és injectiu ja que la intersecció $\langle x\rangle\cap\langle y \rangle$ només conté el neutre. I com que ambdos grups tenen el mateix ordre $p^2$ són isomorfs. 
+			
+			Pel teorema de classificació de grups cíclics novament tenim que $\langle x\rangle$ i $\langle y \rangle$ són isomorfs a $\mathbb{Z}/p\mathbb{Z}$. Amb això
+			$$G\cong\mathbb{Z}/p\mathbb{Z}\times\mathbb{Z}/p\mathbb{Z}$$
+		\end{itemize}
+	\end{proof}
+\end{col}
+
+\begin{teorema}{(Teorema de Cauchy per grups abelians)} Sigui $G$ un grup abelià i finit i $p$ un primer tal que $p\big| |G|$. Aleshores $G$ conté algun element d'ordre $p$.
+	\begin{proof}
+		Ho fem per inducció sobre $|G|$. Si $|G|=2$ llavors $G$ és cíclic i per tant té un element d'ordre 2.
+		
+		Si $G$ és cíclic llavors existeix un element $x$ d'ordre $\ordre{G}$. Com que $p\div\ordre{G}$ considerem $x^{\ordre{G}/p}$ que té ordre $p$ i hem acabat.
+		
+		Si $G$ no és cíclic considerem $x\in G$. Si $p\div\ordre{x}$ llavors per hipòtesi d'inducció existeix un element de $\langle x\rangle$ d'ordre $p$. Suposem doncs $p\nmid\ordre{x}=s$. Considerem $G/\langle x\rangle$ que és grup d'ordre menor que $\ordre{G}$ per ser $G$ abelià i per tant $\langle x\rangle\unlhd G$. Per hipòtesi d'inducció existeix un element $\bar{y}\in G/\langle x\rangle$ d'ordre $p$, és a dir $(\bar{y})^p=\bar{e}$. Així $y^p\in\langle x\rangle$ que té ordre $s$. Conseqüentment $e=(y^p)^s=(y^s)^p\Rightarrow \ordre{y^s}\div p$. Com que $p$ és primer,
+		 si $\ordre{y^s}=1$, llavors $y^s=e\Rightarrow \bar{y}^s=e$ a $G/\langle x\rangle$. Amb això hauria de ser $p\div s$ la qual cosa és una contradicció. Ha de ser doncs $\ordre{y^s}=p$.
+		
+	\end{proof}
+\end{teorema}
+\begin{definicio}
+	Sigui $G$ un grup finit i $p$ un primer tal que $p\big| |G|$. Si $|G|=p^n\cdot m$ amb $p\nmid m$ aleshores diem que $P\leq G$ és un $p$-subgrup de Sylow de $G$ si $|P|=p^n$.
+\end{definicio}
+Alguns exemples de $p$-subgrups de Sylow són:
+\begin{enumerate}
+	\item Si $G$ és un $p$-grup, $G$ ja és un $p$-subgrup de Sylow de $G$.
+	\item Sigui $G=\mathbb{Z}/12\mathbb{Z}$. Tenim $12=2^2\cdot 3$. Així doncs $\langle \bar{4}\rangle$ té ordre 3 i és un $3$-subgrup de Sylow. Igualment $\langle\bar{3}\rangle$ és un $2$-subgrup de Sylow.
+\end{enumerate}
+\subsection{Sobre l'existència de $p$-subgrups de Sylow}
+\begin{teorema}{(Primer teorema de Sylow)}
+	Sigui $G$ un grup finit, $p$ primer tal que $p\big| |G|$. Aleshores $G$ conté algun $p$-subgrup de Sylow.
+	\begin{proof}
+		Ho fem per inducció sobre $|G|$. Si $|G|=2$ llavors $2|2$ i $G$ ja és un 2-subgrup de Sylow de $G$.
+		
+		Ara distingim dos casos:
+		\begin{enumerate}
+			\item Suposem que $p\div Z(G)$. Pel teorema de Cauchy per grups abelians existeix $x\in Z(G)$ d'ordre $p$. Considerant $N=\langle x\rangle \leq Z(G)$ tenim que òbviament $N\unlhd G$. El grup quocient $G/N$ té ordre:
+			$$\ordre{G/N}=\frac{\ordre{G}}{\ordre{N}}=\frac{p^nm}{p}=p^{n-1}m$$.
+			
+			Ara per hipòtesi d'inducció $G/N$ conté un subgrup $P'$ d'ordre $p^{n-1}$. Considerant ara $$\pi:G\longrightarrow G/N$$ epimorfisme fem $P=\inv{\pi}(P')$ tindrem $|P/N|=|P'|=p^{n-1}\Rightarrow \ordre{P}=\ordre{N}p^{n-1}=p^n$
+			\item Suposem $p\nmid\ordre{Z(G)}$. Considerem doncs l'equació de les classes de conjugació:
+			$$\ordre{G}=p^nm=\ordre{Z(G)}+\sum_{i=s+1}^{r}(G:C_G(x_i))$$
+			 amb $(G:C_G(x_i))\geq 2$.
+			 
+			 Com que $|G|=|C_G(x_i)|(G: C_G(x_i))\Rightarrow (G: C_G(x_i))\div\ordre{G}$. Així $(G: C_G(x_i))\geq 2\Rightarrow \ordre{C_G(x_i)}<\ordre{G}$. Com que $p\nmid(G: C_G(x_i))\Rightarrow p^n\div\ordre{C_G(x_i)}$.
+			 Tenim doncs que $C_G(x_i)$ és un subgrup d'ordre menor que $\ordre{G},p^n\div C_G (x_i)\Rightarrow C_G(x_i)$ conté un $p$-subgrup de Sylow per hipòtesi d'inducció. Aquest mateix és un $p$-subgrup de Sylow de $G$.
+			 
+			\end{enumerate}
+	\end{proof}
+\end{teorema}
+\begin{teorema}
+	{(Teorema de Cauchy)} Sigui $G$ d'ordre finit i $p$ primer tal que $p\big| |G|$. Aleshores $G$ conté algun element d'ordre $p$.
+	\begin{proof}
+		$\ordre{G}=p^nm, p\nmid m$. Pel 1r teorema de Sylow $G$ conté algun $p$-subgrup de Sylow. Sigui $P$ un i $x\in P$ diferent del neutre. Com que $\ordre{x}\div\ordre{P}=p^n\Rightarrow \ordre{x}=p^t$ per cert $t\geq 1$. L'element $x^{p^{t-1}}$ té ordre $p$.
+	\end{proof}
+\end{teorema}
+\subsection{Relació entre dos $p$-subgrups de Sylow}
+\begin{teorema}{(Segon teorema de Sylow)}
+Sigui $G$ un grup finit i $p$ un primer tal que $p\big| |G|$. Aleshores si $P_1$ i $P_2$ són $p$-subgrups de Sylow de $G$, existeix $g\in G$ tal que $gP_2\inv{g}=P_1$. 
+\end{teorema}
+En altres paraules el que ens diu el teorema és que dos $p$-subgrups de Sylow són un conjugat de l'altre. Així doncs, si $P$ és un $p$-subgrup de Sylow, $\forall g\in G$, $gP\inv{g}$ és també un $p$-subgrup de Sylow. Observem també que $G$ tindrà a $P$ com a únic subgrup de Sylow si i només si $P\unlhd G$.
+\begin{proof}
+	Considerem $X=\{xP_1|\text{ }x\in G\}$ les classes per l'esquerra de $P_1$. Fem actuar $P_2$ sobre $X$ segons: $y\in P_2, y(xP_1)=(yx)P_1$.
+	L'acció és ben definida en tant que si $xP_1=x_1P_1$ llavors $\inv{(yx)}yx_1=\inv{x}\inv{y}yx_1=\inv{x}x_1\in P_1$ i així $(yx)P_1=(yx_1)P_1$. D'altra banda $e(xP_1)=(ex)P_1=xP_1$ i també $y_1(y_2(xP_1))=y_1((y_2x)P_1)=((y_1y_2)x)P_1=(y_1y_2)(xP_1)$. Per tant $X$ és un $P_2$-conjunt.
+	
+	D'aquesta manera sabem que $\ordre{X_{P_2}}\equiv\ordre{X}\mod p$ però també $\ordre{X}=(G:P_1)=\tfrac{p^nm}{p^n}=m$, que no és divisible per $p$. Això implica $\ordre{X_{P_2}}\neq 0\Rightarrow \exists xP_1\in X$ fix per $P_2$.
+	
+	En conseqüència $y(xP_1)=(yx)P_1=xP_1\forall y\in P_2\Leftrightarrow \inv{x}yx\in P_1\forall y\in P_2\Leftrightarrow \inv{x}P_2x\leq P_1$. Com que ambdós tenen $p^n$ elements $\inv{x}P_2x= P_1$ i $g=\inv{x}$.
+\end{proof}
+\subsection{Sobre el nombre de $p$-subgrups de Sylow d'un grup}
+\begin{definicio}
+	Sigui $G$ un grup i $H$ un subgrup de $G$. El normalitzador de $H$ a $G$ és:
+	$$N_G(H)=\{x\in G|\text{ }xH\inv{x}=H\}$$
+\end{definicio}
+\begin{teorema}{(Tercer teorema de Sylow)}
+	Sigui $G$ finit, $p$ primer de manera que $p\big||G|=p^n\cdot m$ amb $p\nmid m$. Aleshores si $n_p$ és el nombre de $p$-subgrups de Sylow de G, $n_p\equiv 1\mod p$ i $n_p\big||G|=p^n\cdot m$. En particular $n_p\div m$.
+	\begin{proof}
+		Fixem $p$ primer i $P$ un $p$-subgrup de Sylow de $G$. Considerem $X=\{T|\text{ }T\text{ és $p$-subgrup de Sylow de $G$}\}$. Amb l'acció donada per $xT=xT\inv{x},x\in P$, $X$ és un $P$-conjunt. En efecte, és una acció ja que compleix que $eT=eT\inv{e}=T$ i $x(yT)=x(yT\inv{y})=(xy)T\inv{(xy)}=(xy)T$. 
+		
+		Considerem com sempre $X_P=\{ T\in X | \text{ } xT\inv{x}=T ,\forall x\in P\}$. Evidentment $P\in X_P$. Sigui $T\in X_P$ llavors $xT\inv{x}=T,\forall x\in P\Rightarrow P\leq N_G(T)$ i també $T\leq N_G(T)$. És a dir $P$ i $T$ són $p$-subgrups de Sylow de $N_G(T)$. Pel 2n teorema de Sylow $P$ i $T$ són conjugats dins $N_G(T)$, ço és, existeix $y\in N_G(T)$ tal que $P=yT\inv{y}$. En conseqüència $X_P=\{P\}$.
+		
+		Ara bé $P$ és un $p$-grup $\Rightarrow\ordre{X}\equiv\ordre{X_P}=1\mod p$. Per tant $n_p=\ordre{X}\equiv 1\mod p$.
+		
+		Fem ara actuar $G$ sobre $X$ segons $gP=gP\inv{g},g\in G$. Pel 2n teorema de Sylow $\orb(P)=\{gP\inv{g}|\text{ }g\in G\}=X$. Ara $\ordre{X}=n_p=\ordre{\orb(P)}\div \ordre{G}$ però pel que hem vist abans $p\nmid n_p\Rightarrow n_p\div m$.
+	\end{proof}
+\end{teorema}
+\begin{col}
+	Suposem  $\ordre{G}=pq$ amb $p$ i $q$ primers $p<q$. Aleshores $n_q=1$ i per tant el $q$-subgrup de Sylow de $G$ és normal. ($G$ no és simple).
+	\begin{proof}
+	$n_q\equiv 1\mod q\Rightarrow n_q=1+\alpha q$ per cert $\alpha$. Ara $n_q\div p\Rightarrow n_q=1$ o bé $n_q=p$, que no pot ser per ser $p<q$. Aleshores $n_q=1$ i pel 2n teorema de Sylow, l'únic que hi ha és normal a $G$.
+	\end{proof}
+\end{col}
+
+\section{Classificació de grups abelians}
+\begin{teorema}
+	Si $A_n$ és el grup alternat d'$n$ elements i $n\geq 5$ aleshores $A_n$ és simple. 
+\end{teorema}
+\begin{teorema} {(Teorema de Feit-Thompson)}
+	Si $G$ és un grup finit no abelià simple llavors $G$ té ordre parell.
+\end{teorema}
+\begin{proposicio}
+	Suposem que $G$ és un grup abelià finit. Siguin $H_1$ i $H_2$ subgrups de $G$ d'ordres primers. Considerem $H=H_1\cdot H_2$:
+	\begin{enumerate}
+		\item Tot element $h\in H$ s'escriu de forma única com $h=h_1h_2$ amb $h_1\in H_1$ i $h_2\in H_2$.
+		\item $H\cong H_1\times H_2$
+	\end{enumerate}
+\begin{proof}
+	\begin{enumerate}
+		\item Observem que $H_1\cap H_2$ és subgrup de $H_1$ i de $H_2$. Pel teorema de Lagrange $\ordre{H_1\cap H_2}\div \ordre{H_1}$ i $\ordre{H_1\cap H_2}\div \ordre{H_2}$. 	Per tant ha de ser $H_1\cap H_2=\{e\}$. 
+		
+		Així suposant que $h=h_1h_2=h_1'h_2'\in H$ tenim $\inv{(h_1')}h_1=h_2'\inv{h_2}\in H_1\cap H_2\Rightarrow h_1=h_1',h_2=h_2'$.
+		\item Considerem ara $$\varphi:H\longrightarrow H_1\times H_2$$ $$ h_1h_2\longmapsto (h_1,h_2)$$ 
+		$\varphi$ és ben definida per l'apartat anterior. Evidentment és epimorfisme per ser $G$ abelià. I a més $\varphi$ és injectiu en tant que $h_1h_2=ee$ implica per l'apartat anterior també $h_1=h_2=e$ i per tant $\ker(f)=\{e\}$. En conseqüència $\varphi$ és isomorfisme i $$H\cong H_1\times H_2$$
+	\end{enumerate}
+\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Suposem que $G$ és un grup abelià finit. Siguin $H_1,\ldots,H_r$ subgrups de $G$ d'ordres coprimers. Considerem $H=H_1\cdot\ldots\cdot H_r$. Aleshores $H\cong H_1\times\ldots\times H_r$.
+	\begin{proof}
+		Per inducció a partir de l'anterior.
+	\end{proof}
+\end{proposicio}
+\begin{teorema}
+	Suposem que $G$ és un grup abelià finit $\ordre{G}=p_1^{n_1}\ldots p_r^{n_r}$ amb els $p_i$ primers diferents. Aleshores si $P_1,\ldots,P_r$ són els subgrups de Sylow de $G$:
+	$$G\cong P_1\times\ldots\times P_r$$
+\end{teorema}
+Cada $P_i$ és un grup abelià d'ordre potència d'un primer.
+\begin{proof}
+	Posem $H=P_1\cdot\ldots\cdot P_r$ de forma que $H\leq G,\ordre{H}=p_1^{n_1}\ldots p_r^{n_r}=\ordre{G}\Rightarrow H=G$. Conseqüentment:
+		$$G\cong P_1\times\ldots\times P_r$$
+\end{proof}
+\begin{teorema}
+Si $G$ és un grup abelià finit aleshores:$$G\cong \mathbb{Z}/p_1^{n_1}\mathbb{Z}\times\ldots\times \mathbb{Z}/p_r^{n_r}\mathbb{Z}$$
+on els $p_i$ són primers no necessàriament diferents. A més la descomposició és única tret de l'ordre dels factors.
+\end{teorema}
+\begin{proposicio}
+	$\mathbb{Z}/(m\cdot n)\mathbb{Z}\cong\mathbb{Z}/m\mathbb{Z}\times \mathbb{Z}/ n\mathbb{Z}$ si i només si $m$ i $n$ són coprimers.
+\end{proposicio}
+\newpage
+\chapter{Anells}
+\section{Anells i subanells}
+\begin{definicio} 
+	Direm que un conjunt $R$ no buit i tancat amb dues operacions $+$ i $\cdot$ és un anell si compleix:
+	\begin{enumerate}
+		\item $(R,+)$ és un grup commutatiu.
+		\item El producte $\cdot $ compleix:
+		
+		\begin{enumerate}[label=\roman*.]
+			
+			\item $\forall x,y\in R$ es dóna que $x\cdot y\in R$
+			\item Propietat associativa, $\forall x,y,z\in R$ tenim $x\cdot(y\cdot z)=(x\cdot y)\cdot z$
+			\item Existència d'element neutre, $1$ tal que $\forall x\in R$, $1\cdot x=x\cdot 1=x$
+			\item Propietat distributiva, $\forall x,y,z\in R$ tenim $x\cdot(y+z)=x\cdot y+x\cdot z$ i també $(y+z)\cdot x=y\cdot x+z\cdot x$
+		\end{enumerate}
+	\end{enumerate}
+Si el producte és a més commutatiu, ço és, $x\cdot y=y\cdot x\;\forall x,y\in R$, aleshores l'anell s'anomena commutatiu.
+\end{definicio}
+A partir d'ara $R$ representa un anell. Pel que fa a la notació, emprarem notació additiva per $(R,+)$. Així el neutre per la suma és $0$ i els inversos per la suma són donat $a\in R$, $-a$.
+\begin{proposicio}
+	El neutre multiplicatiu $1$ de $R$ és únic.
+	\begin{proof}
+		Siguin $1,1'$ neutres multiplicatius de $R$ llavors $1=1\cdot1'=1'$.
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}
+Siguin $a,b\in R$. Aleshores:
+\begin{enumerate}
+\item $-(-a)=a$
+\item $0a=a0=0$
+\item $(-a)b=a(-b)=-(ab)$
+\item $(-a)(-b)=ab$
+\item $-1(a)=-a$
+\end{enumerate}
+\begin{proof}
+	\begin{enumerate}
+		\item Ja ho tenim de grups.
+		\item Tenim $0+0=0$ i així $0a=(0+0)a=0a+0a$. Sumant $-0a$ tenim $0a=0$. Anàlogament $a0=0$.
+		\item Fem $0=(a-a)b=ab+(-a)b$. Per tant $-(ab)=(-a)b$ i igualment tenim $-(ab)=a(-b)$.
+		\item A partir de l'anterior observem que $(-a)(-b)=-(a(-b))=-(-(ab))=ab$.
+		\item Anàlogament $-1(a)=-(1a)=-a$.
+	\end{enumerate}
+\end{proof}
+\end{proposicio}
+Alguns exemples d'anells són:
+\begin{enumerate}
+	 \item $\mathbb{Z},\zn,\mathbb{Q},\mathbb{R},\mathbb{C}$ i l'anell de polinomis $K[x]$.
+	 \item Les matrius $M_n(\mathbb{Q})$ amb la suma i el producte de matrius habituals. És tracta d'un anell no commutatiu com ja sabem.
+	 \item Si $G$ és un grup abelià llavors:
+	 $$\text{End}(G)=\{f: G\longrightarrow G\barra f\text{ és morfisme}\}$$
+	 amb la composició $f\cdot g=f\circ g$ i $$f+g:G\longrightarrow G\qquad \qquad$$ $$\qquad\qquad x\longmapsto f(x)+g(x)$$ és un anell.
+\end{enumerate}
+\begin{definicio}
+	Sigui $S\subseteq R$ no buit. Direm que $S$ és un subanell si $1_R\in S$ i amb les operacions de $R$ restringides a $S$, $S$ és un grup amb la suma i és tancat pel producte.
+\end{definicio}
+Seguint els exemples d'abans ara tindriem:
+$$\mathbb{Z}\subseteq\mathbb{Q}\subseteq\mathbb{R}\subseteq\mathbb{C}$$ o també $$\mathbb{Z}\subseteq K[x]$$
+\begin{definicio}
+	Diem que $x\in R$ és invertible si existeix $y\in R$ tal que $xy=yx=1$. El denotem $y=\inv{x}$.
+\end{definicio}
+\begin{proposicio}
+	Si $x\in R$ és invertible llavors aquest invers és únic.\begin{proof}
+		Suposem $y,z\in R$ dos inversos de $x$. Aleshores $y=y1=y(xz)=(yx)z=1z=z$.
+	\end{proof}
+\end{proposicio}
+\begin{definicio}
+	$$U(R)=\{x\in R\barra x\text{ és invertible}\}$$.
+
+\end{definicio}
+\begin{proposicio}
+	$U(R)$ és un grup amb el producte\begin{proof}
+		Siguin $x,y\in U(R)$. Sabem que $x$ és invertible i per tant $x\inv{y}$ també ho és.
+	\end{proof}
+\end{proposicio}
+Per exemple $U(\mathbb{Z})=\{1,-1\}$ i $U(\mathbb{Q})=\mathbb{Q}\setminus\{0\}$. A $\zn$ tenim que $U(\zn)=\{\bar{a}\barra \mcd(a,n)=1\}$. Veiem-ho.
+Suposem $\bar{a}$ invertible, és a dir, existeix $\bar{b}$ tal que $\bar{ab}=\bar{1}$. Això vol dir que $ab-1=\lambda n\Leftrightarrow ab-\lambda n=1$ la qual cosa implica que $\mcd(a,n)=1$. Si ara tenim $\bar{a}$ tal que $\mcd(a,n)=1$ llavors per la identitat de Bézout existeixen $\alpha,\beta$ tals que $\alpha a+\beta n=1$. Prenent classes tenim $\bar{a\alpha}=\bar{1}$ i $\bar{a}$ és invertible.
+\begin{definicio}
+	Direm que un anell commutatiu $R$ és un cos si $U(R)=R\setminus\{0\}$. Si $U(R)=R\setminus\{0\}$ i $R$ no és commutatiu diem que $R$ és un anell de divisió.
+\end{definicio}
+\section{Ideals}
+Considerarem anells commutatius, és a dir, $xy=yx\;\forall x,y\in R$. 
+\begin{definicio}
+	Diem que un subconjunt no buit $I$ de $R$ és un ideal de $R$ si amb la suma $+$, $I$ és un subgrup de $R$ i a més $rx\in I\;\forall r\in R\, ,\forall x\in I$.
+\end{definicio}
+\begin{definicio} Diem que un ideal $I$ de $R$ és principal, si està generat per un sol element.
+\end{definicio}
+Tenint el compte el que hem vist a grups podem enunciar la següent proposició.
+\begin{proposicio}
+	$I\subseteq R$ no buit és un ideal si i només si:\begin{enumerate}
+		\item $\forall x,y\in I\quad x-y\in I$
+		\item $\forall r\in R,\;\forall x\in I\quad rx\in I$. 
+	\end{enumerate}
+\end{proposicio}
+Alguns exemples d'ideals són doncs:
+\begin{enumerate}
+	\item Els ideals de $R$ $I=\{0\}$ i $I=R$.
+	\item Fixat un element $a\in R$, els múltiples de $a$ $(a)=aR=Ra=\{ra\barra r\in R\}$ és un ideal ja que $ra-sa=(r-s)a\in (a)$ i $s(ra)=(sr)a\in (a)$.
+	\item Si $R=\mathbb{Z}$ aleshores tot ideal de $R$ és principal. Sigui $I$ un ideal de $R$ llavors $I$ és subgrup de $R$ amb la suma, que és cíclic $\Rightarrow$ $I$ és cíclic. Així $I=n\mathbb{Z}=(n)$ per cert $n\in \mathbb{Z}$.
+	\item El mateix ocorre si fem $R=K[x]$. Si $I$ és un ideal de $R$ i $I=\{0\}$ llavors $I=(0)$. Suposem doncs que $I\neq\{0\}$. Sigui ara $f(x)\in R$ diferent de $0$ tal que $\grau(f(x))=\min\{g(x)\in K[x]\barra g(x)\in I\}$. Veiem doncs que $f(x)$ ja genera $I$.
+	
+	Sigui $g(x)\in I$ fem $g(x)=f(x)q(x)+r(x)$ amb $\grau(r(x))<\grau(f(x))$ o $r(x)=0$. Ara $r(x)=g(x)-f(x)q(x)\in I$ ja que ambdós polinomis són de $I$. Ha de ser doncs $r(x)=0$ i $I=(f(x))$.
+\end{enumerate}
+\begin{proposicio}
+	$R$ és un cos si i només si els únics ideals de $R$ són $(0)$ i $R$.
+	\begin{proof}
+		Suposem $R$ cos. Si $I$  és diferent de $(0)$ i sigui $a\in I$ diferent de 0 $a$ té invers $\inv{a}\in R$. Així $a\inv{a}=1\in I$. Sigui ara $r\in R$ $r=r1$ amb la qual cosa $r\in I$ i com que per definició $I\subseteq R$ tenim $I=R$.
+		
+		Si els únics ideals de $R$ són $(0)$ i $R$ posem per $a\in R$, $a\neq 0$, $I=(a)$. Hem de veure que $U(R)\supseteq R$. Aleshores $(a)=aR=R$ i en particular $1\in (a)$ Per tant existeix $b\in R$ tal que $ab=1$ i $a$ és invertible. En particular $R$ és invertible
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Siguin $I,J$ ideals de $R$. Aleshores:
+	\begin{enumerate}
+		\item $I+J=\{x+y\barra x\in I, y\in J\}$ és un ideal de $R$.\item $I\cap J$ és ideal de $R$.
+		\item $IJ=\{\sum_{i}x_i y_i\barra x_i\in I, y_i\in J\}$ és un ideal de $R$ i a més $IJ\subseteq I\cap J$.
+	\end{enumerate}
+\begin{proof}
+	\begin{enumerate}
+		\item Sabem que $I+J\leq R$. SiguiN $x\in I,y\in J,r\in R$ llavors $r(x+y)=rx+ry\in I+J$ evidentment.
+		\item Sabem que $I\cap J\leq R$. Sigui $x\in I\cap J, r\in R$ aleshores $rx\in I $ i $rx\in J$ per ser $I,J$ ideals.
+		\item $IJ\leq R$. És ideal pel mateix motiu que als casos anteriors. Així sigui $z\in IJ$ tenim que $z=\sum_{i}x_iy_i$ per $x_i\in I$ i $y_i\in J$. Ara bé com que $I$ és ideal per tot $i$ tenim que $x_iy_i\in I$. Igualment com que $J$ és ideal per tot $i$ tenim $x_iy_i\in J$. En particular $z\in I\cap J$.
+	\end{enumerate}
+\end{proof}
+\end{proposicio}
+
+Fent ara $R=\mathbb{Z}$ i donats dos ideals $I,J$ de $R$ tenim que $I=(a),J=(b)$ per certs $a$ i $b$. Veiem que $I+J=(a)+(b)=(d)$ amb $d=\mcd(a,b)$.
+
+Així doncs tenim que $a=a'd$ i $b=b'd$ per certs $a',b'$. D'aquesta forma $d=\alpha a+\beta b=\alpha a' d+
+\beta b' d=(\alpha a'+\beta b')d$ i per tant $(a)+(b)\subseteq (d)$. Però, per la identitat de Bézout tenim $d=\alpha' a+\beta' b$ per certs $\alpha',\beta'$. Així $(d)\subseteq (a)+(b)$.
+
+Igualment podem veure que $(a)\cap(b)=(m)$ amb $m=\mcm(a,b)$. Com que $m=\lambda a=\mu b$ tenim òbviament $(m)\subseteq(a)\cap (b)$. D'altra banda si $x\in (a)\cap(b)$ ha de ser múltiple de $a$ i de $b$. En particular és múltiple del mínim comú múltiple i $x\in (m)$.
+
+Per últim $(a) (b)=\{\alpha_1 ab+\ldots+\alpha_n ab\}=\{(\alpha_1+\ldots\alpha_n)ab\}=(ab)$
+\section{Anell quocient}
+Considerarem el grup additiu $(R,+)$ i un ideal $I$ de $R$. Com que $R$ és abelià $I$ és normal a $R$. Considerarem doncs el grup quocient $R/I$ amb $\bar{x}+\bar{y}=\bar{x+y}$.
+\begin{proposicio}
+	Amb el producte $\bar{x}\cdot\bar{y}=\bar{xy}$ $R/I$ és un anell.
+	\begin{proof}
+		Veiem que el producte és ben definit. Suposem que $\bar{x_1}=\bar{x_2}$ i $\bar{y_1}=\bar{y_2}$. Així doncs $x_1y_1-x_2y_2=x_1y_1-x_1y_2+x_1y_2-x_2y_2=x_1(y_1-y_2)+y_2(x_1-x_2)\in I$ ja que $(y_1-y_2),(x_1-x_2)\in I$. Així $\bar{x_1y_1}=\bar{x_2y_2}$.
+		
+		Només queda comprovar les propietats referents al producte. Així $\bar{1}$ és el neutre multiplicatiu de $R/I$ i l'associativitat i la distributivitat són conseqüència de les propietats corresponents sobre $R$ i de la definició del producte a $R/I$.
+	\end{proof}
+\end{proposicio}
+
+Com a exemple podem considerar $\zn$.
+
+\begin{proposicio}
+	$\zn$ és cos si i només si $n$ és primer.
+\end{proposicio}
+\section{Morfismes d'anells}
+\begin{definicio}
+	Si $R,S$ són anells direm que $f:R\longrightarrow S$ és un morfisme d'anells si:
+	\begin{enumerate}
+		\item $f:R\longrightarrow S$ és morfisme de grups amb la suma.
+		\item $f(xy)=f(x)f(y)$ $\forall x,y\in R$
+		\item $f(1_R)=f(1_S)$.
+	\end{enumerate}
+ A més a més si el morfisme:
+	\begin{itemize}
+		\item $f$ és injectiu, s'anomena monomorfisme.
+		\item $f$ és exhaustiu, s'anomena epimorfisme.
+		\item $f$ és bijectiu, s'anomena isomorfisme. En aquest cas diem que $R$ i $S$ són isomorfs i escrivim $R\cong S$.
+		\item $f:R\longrightarrow R$, s'anomena endomorfisme.
+		\item és bijectiu i $f:R\longrightarrow R$, s'anomena automorfisme.
+	\end{itemize}
+\end{definicio}
+\begin{proposicio}
+	Sigui $f:R\longrightarrow S$ un morfisme d'anells. Aleshores:\begin{enumerate}
+		\item $f(0)=0$
+		\item $f(-x)=-x\quad\forall x\in R$
+	\end{enumerate}
+\begin{proof}
+	En particular $f$ és morfisme de grups amb $+$.
+\end{proof}
+\end{proposicio}
+\begin{definicio}
+		Sigui $f:R\longrightarrow S$ un morfisme d'anells. Aleshores:
+		$$\ker(f)=\{x\in R\barra f(x)=0\}$$
+		$$\ima(f)=\{f(x)\barra x\in R\}$$
+\end{definicio}
+\begin{proposicio}
+		Sigui $f:R\longrightarrow S$ un morfisme d'anells. Aleshores:
+		\begin{enumerate}
+			\item $\ker(f)$ és un ideal de $R$ i a més $\ker(f)=\{0\}$ si i només si $f$ és monomorfisme.
+			\item $\ima(f) $ és subanell de $S$. Evidentment $\ima(f)$ si i només si $f$ és epimorfisme.
+		\end{enumerate}
+	\begin{proof}
+		\begin{enumerate}
+			\item Sabem que $\ker(f)\unlhd R$ i a més si $x\in \ker(f)$ i $r\in R$ llavors $f(rx)=f(r)f(x)=f(r)0=0$ i per tant $rx\in \ker(f)$, és a dir $\ker(f)$ és un ideal de $R$.
+			
+			Ara si $\ker(f)=\{0\}$ suposem $f(x)=f(y)$. Sumant $-f(y)$ tenim $0=f(x)-f(y)=f(x-y)$ amb la qual cosa $x-y\in \ker(f)$ i $x=y$. Si $f$ és monomorfisme, sigui $x\in \ker(f)$ tenim $f(x)=0$ i $f(0)=0$ per ser morfisme de grups amb la suma. Per tant $x=0$.
+			
+		\item Sabem que $\ima(f)\leq R$. Siguin $f(x),f(y)\in \ima(f)$ llavors $f(x)f(y)=f(xy)\in \ima(f)$ i és tancat pel producte. Com que $1_S=f(1_R)\in\ima(f)$ $\ima(f)$ és subanell de $S$
+		\end{enumerate}
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}
+		Sigui $f:R\longrightarrow S$ un morfisme d'anells. Aleshores:\begin{enumerate}
+		\item $J$ ideal de $S$ $\im$ $\inv{f}(J)=\{x\in R\barra f(x)\in J\}$ és un ideal de $R$.
+		\item $f$ epimorfisme i $I$ ideal de $R\Rightarrow f(I)$ és un ideal de $S$.
+		\item Si $R'$ és un subanell de $R\Rightarrow f(R') $ és un subanell de $S$.
+		\item $S'$ subanell de $S$$\Rightarrow \inv{f}(S')$ és un subanell de $R$.
+		\end{enumerate}
+\end{proposicio}
+Com a exemples podem considerar:
+\begin{enumerate}
+	\item $I$ ideal de $R$. La projecció canònica $\pi:R\longrightarrow R/I$ donada per $\pi(x)=\bar{x}$ és un epimorfisme d'anells.
+	\item El morfisme avaluació. Sigui $K$ un cos i $a\in K$, considerem $K[x]$.
+	Aleshores l'aplicació:
+	$$\psi_a:K[x]\longrightarrow K$$ $$\quad\qquad f(x)\longmapsto f(a)$$ és un morfisme d'anells. El seu nucli conté els polinomis que tenen $a$ com a arrel. Així $\ker(\psi_a)=\{f(x)\barra f(a)=0\}$ és un ideal de $K[x]$.
+\end{enumerate}
+\begin{proposicio}
+	Siguin $R,S,T$ anells i $f:R\longrightarrow S$, $g:S\longrightarrow T$ morfismes d'anells llavors:
+	\begin{enumerate}
+		\item $g\circ f:R\longrightarrow S\longrightarrow T$ és un morfisme d'anells.
+		\item Si $f$ és isomorfisme llavors $\inv{f}:S\longrightarrow R$ és un isomorfisme d'anells.
+	\end{enumerate}
+\end{proposicio}
+\subsection{Tres teoremes d'isomorfia}
+\begin{teorema}(Primer teorema d'isomorfia)
+	Sigui $f:R\longrightarrow S$ un morfisme d'anells. Aleshores 
+	$$\tilde{f}:R/\ker(f)\longrightarrow \ima(f)$$
+	$$\qquad\qquad \bar{x}\longmapsto f(x)$$
+	és un isomorfisme. En particular $R/\ker(f)\cong {\ima(f)}$.
+	\begin{proof}
+		Sabem que $\tilde{f}$ és ben definida i que és isomorfisme de grups. Només hem de veure que és morfisme d'anells d'acord amb $$\tilde{f}(\bar{x}\cdot\bar{y})=\tilde{f}(\bar{xy})=f(xy)=f(x)f(y)=\tilde{f}(\bar{x})\tilde{f}(\bar{y})$$
+	\end{proof}
+\end{teorema}
+\begin{teorema}
+	Sigui $f:R\longrightarrow S$ epimorfisme d'anells. Aleshores l'aplicació
+	$$\varphi:\{J \text{ ideal de }R\barra \ker(f)\subseteq J\}\longrightarrow\{\text{ideals de } S\}\qquad\qquad$$
+	$$\qquad\qquad\qquad J\longmapsto f(J)$$
+	és bijectiva.
+	
+	En particular si $I$ és ideal de $R$, els ideals de $R/I$ són de la forma $\pi(J)=J/I$ on $J$ és un ideal de $R$ que conté $I$.
+\end{teorema}
+\begin{proposicio}
+	Els ideals de $\zn$ són els generats pels divisors de $n$.
+	\begin{proof}
+		Pel 1r teorema d'isomorfia hi ha una bijecció entre ideals de $\mathbb{Z}$ que contenen $(n)$ i ideals de $\zn$. Veurem més endavant que tot ideal de $\mathbb{Z}$ és principal. D'aquesta manera els ideals de $\zn$ són de la forma $(\bar{a})$ amb $(n)\subseteq (a)$. En altres paraules, els ideals de $\zn$ són els generats per $\bar{a}$ tal que $a\div n$.
+	\end{proof}
+\end{proposicio}
+\begin{teorema}(Segon teorema d'isomofia)
+	Siguin $I,J$ ideals de $R$, aleshores:$$(I+J)/I\cong J/(I\cap J)$$
+	on aquest isomorfisme és un isomorfisme de grups que conserva el producte.
+\end{teorema}
+En aquest cas l'isomorfisme no és d'anells ja que malgrat que $I+J$ és ideal de $R$, $I,J\subseteq I+J$ i $I\cap J$ és ideal de $R$ no podem assegurar que aquests continguin l'unitat de l'anell.
+\begin{proof}
+	Sabem que existeix un isomorfisme de grups. Només s'ha de veure que aquest mateix conserva el producte. 
+\end{proof}
+\begin{teorema}(Tercer teorema d'isomorfia)
+	Siguin $I,J$ ideals de $R$ tals que $I\subseteq	J$. Aleshores hi ha un isomorfisme d'anells de manera que:$$(R/I)/(J/I)\cong R/J$$
+\end{teorema}
+Sabem pel primer teorema que $J/I=\pi(J)$ és un ideal de $R/I$, de manera que té sentit l'enunciat.
+\begin{proof}
+	El mateix isomorfisme que per grups funciona.
+\end{proof}
+\section{Característica d'un anell}
+\begin{definicio}
+	Diem que un anell $R$ té característica $n>0$ si $n$ és el mínim tal que $1+1+\stackrel{n)}\ldots+1=n\cdot 1=0$ a $R$. Si aquest no existeix, diem que $R$ té característica zero. Escriurem $\ch(R)=n$ o bé $\ch(R)=0$.
+\end{definicio}
+Evidentment tindrem $\ch(\mathbb{Z})=\ch(\mathbb{Q})=0$ i també $ \ch(\zn)=n$.
+\begin{proposicio}
+	Sigui $f:\mathbb{Z}\longrightarrow R$ l'aplicació tal que $f(a)=1_R+1_R+\stackrel{a)}\ldots+1_R=a\cdot 1_R$. Aleshores $f$ és morfisme d'anells i $\ker(f)=(n)$ amb $n=\ch(R)$. En particular si $f$ és injectiva $\ch(R)=0$.\begin{proof}
+		És morfisme de grups en tant que
+		$f(a+b)=(a+b)\cdot 1_R=f(a)+f(b)$. I compleix igualment que $f(1)=1\cdot 1_R=1_R$ i que $f(a\cdot b)=(a\cdot b)\cdot 1_R=f(a)f(b)$.
+		Suposem doncs $\ch(R)=n$. Llavors és evident que com que $\ker(f)$ és cíclic haurà d'estar generat pel mínim enter que compleix $n\cdot 1_R=0$, ço és $\ker(f)=(n)$.
+		
+	\end{proof}
+\end{proposicio}
+\begin{col}
+	Si $\ch(R)=0$ llavors $\mathbb{Z}$ és isomorf a un subanell de $R$. Si pel contrari, $\ch(R)=n$, aleshores $\zn$ és isomorf a un subanell de $R$.
+	\begin{proof}
+		Si $\ch(R)=0$ aleshores $$f:\mathbb{Z}\longrightarrow R$$ $$\qquad 1\longmapsto 1_R$$ és injectiva, bijectiva sobre la imatge. Tenim doncs $\mathbb{Z}\cong \ima(f)$ subanell de $R$.
+		
+		Si $\ch(R)=n$, llavors $$f:\mathbb{Z}\longrightarrow R$$ $$\qquad 1\longmapsto 1_R$$ té $\ker(f)=(n)$ i pel primer teorema d'isomorfia $\zn\cong \ima(f)$ subanell de $R$.
+	\end{proof}
+\end{col}
+\begin{col}
+Sigui $K$ un cos. Si $\ch(K)=0$ aleshores $K$ conté un subcos isomorf a $\mathbb{Q}$. Si $\ch(K)=p$ amb $p$ primer aleshores $K$ conté algun subcos isomorf a $\mathbb{Z}/p\mathbb{Z}$.
+\begin{proof}
+Suposem $\ch(K)=0$. Considerant $f$ de la proposició anterior podem veure que si $b\in K$ llavors el seu invers també és dins de $K$ Ara considerem $$\phi:\mathbb{Q}\longrightarrow K$$ donada per $\phi(\tfrac{a}{b})=a\inv{b}\in K$. L'aplicació és ben definida ja que $\tfrac{a}{b}=\tfrac{c}{d}$ si i només si $ad=cb$.  Per ser $K$ cos $\phi$ és compleix $\phi(\tfrac{a}{b}\tfrac{c}{d})=\phi(\tfrac{a}{b})\phi(\tfrac{c}{d})$ i a més $\phi(1)=1_K$. D'altra banda es comprova fàcilment que es morfisme de grups. Tenim doncs un morfisme de cossos, veiem que és injectiu. Si considerem $\ker(\phi)$ ideal de $\mathbb{Q}$ haurà de ser $\ker(\phi)=\mathbb{Q}$ o $\ker(\phi)=(0)$. Haurà de ser $\ker(\phi)=(0)$ i tenim $\phi$ injectiva amb la qual cosa $\mathbb{Q}$ és contingut a $K$.
+\end{proof}
+\end{col}
+\begin{proposicio}
+	Sigui $K$ un cos. Aleshores $\ch(K)=0$ o bé $\ch(K)=p$ primer.
+	\begin{proof}
+		Suposem $\ch(K)=n\neq0$. Aleshores $1+\stackrel{n)}\ldots+1=0$ a $K$. Si $n$ no és primer llavors $n=n_1n_2$ amb $1<n_1,n_2<n$. Tenim.$$(1+\stackrel{n_1)}\ldots+1)(1+\stackrel{n_2)}\ldots+1)=n_1n_21_K=1+\stackrel{n)}\ldots+1=0$$ Hem trobat doncs $n_1$ i $n_2$ diferents de zero tals que $n_1n_21_K=0$. Contradicció.
+	\end{proof}
+\end{proposicio}
+\section{Dominis d'integritat, ideals primers i ideals maximals}
+En aquesta secció $R$ serà un anell commutatiu i com sempre amb unitat.
+\begin{definicio}
+	Un element $a\in R$ diferent de 0 és un divisor de zero si existeix $b\in R$ diferent de 0 també tal que $ab=0$. Així doncs diem que $R$ és un domini d'integritat (DI) si $R$ no té divisors de zero.
+\end{definicio}
+Evidentment si $K$ és un cos llavors és un DI. Ja que si suposem $a,b\in K$ diferents de zero tals que $ab=0$ llavors multiplicant pels inversos tindríem $1=0$.
+\begin{teorema}
+	Si $R$ és un DI finit llavors és un cos.
+	\begin{proof}
+		Sigui $a\in R$ fix, diferent de 0. Considerem l'aplicació $f:R\longrightarrow R$ donada per $f(x)=ax$. Com que $R$ és tancat, si $R$ és finit $f$ és exhaustiva. En particular existeix $x\in R$ tal que $ax=1$ i hem acabat.
+	\end{proof}
+\end{teorema}
+\begin{proposicio}
+	$\zn$ és DI si i només si $n$ és primer.
+\end{proposicio}
+\begin{definicio}
+	Sigui $I$ un ideal de $R$, $I\neq R$, es diu que és primer si sempre que $ab\in I$ llavors $a\in I$ o bé $b\in I$.
+\end{definicio}
+\begin{proposicio}
+	Sigui $I$ un ideal de $R$, $I\neq R$. Aleshores $I$ és primer si i només si $R/I$ és domini d'integritat.
+	\begin{proof}
+		Suposem $I$ primer i $\bar{a}\bar{b}=0$ a $R/I$. Això implica $ab\in I$ i com que és primer un dels dos és de I i per tant 0 a $R/I$.
+		
+		Recíprocament si $R/I$ és DI i suposem $ab\in I$ llavors $\bar{a}\bar{b}=0$ a $R/I$. En particular algun dels dos és 0 i pertany a $I$.
+	\end{proof}
+
+\end{proposicio}
+Podem posar exemples d'algunes aplicacions:\begin{enumerate}
+	\item Si $R$ és anell llavors $R$ és DI si i només si $(0)$ és primer.
+	\item Els ideals primers de $\mathbb{Z}$ són $(0)$ i $(n)$ amb $n$ primer ja que $\zn$ és DI. 
+	
+\end{enumerate}
+\begin{definicio}
+	Diem que un ideal $M$ de $R$ és maximal si $M\neq R$ i sempre que $M\subseteq I\subseteq R$ amb $I$ ideal de $R$ es dóna que $I=M$ o bé $I=R$.
+\end{definicio}
+\begin{proposicio}
+	Sigui $M$ un ideal de $R$ diferent de $R$. Aleshores $M$ és maximal si i només si $R/M$ és cos.
+	\begin{proof}
+		$R/M$ és anell. Per tant serà cos si i només si els seus ideals són $(0)$ i $R/M$. D'altra banda els ideals de $R/M$ són, pel 1r teorema d'isomorfia de la forma $I/M$ amb $I$ ideal de $R$, és a dir $M\subseteq I$. Tenim doncs $M$ maximal si i només si $I=M$ o $I=R$. Les dues possibilitats impliquen $R/M$ cos.
+	\end{proof}
+\end{proposicio}
+\begin{col}
+	Si $M$ és un ideal maximal de $R$ llavors és primer.
+\end{col}
+
+\begin{definicio}
+	Sigui $A$ un conjunt no buit. Aleshores diem que una relació $\leq$ és d'ordre si compleix:
+	\begin{enumerate}
+		\item Reflexiva: $a\leq a\;\forall a\in A$
+		\item Antisimètrica: $a\leq b$ i $b\leq a$ $\im a=b\;\forall a ,b \in A$
+		\item Transitiva: $a\leq b,b\leq c\im a\leq c\;\forall a,b,c\in A$.
+	\end{enumerate}
+\end{definicio}\begin{definicio}Sigui $A$ un subconjunt no buit amb una relació d'ordre $\leq$. Aleshores
+un subconjunt $\mathcal{C}\subseteq A$ és una cadena si donats $a,b\in \mathcal{C}$ llavors $a\leq b$ o $b\leq a$.
+
+Sigui $B\subseteq A$ diem que $a\in A$ és una fita superior de $B$ si $b\leq a$ per a tot $b\in B$.
+
+Diem que $c\in A$ és maximal si sempre que $a\leq b$ llavors $b=a$.
+\end{definicio}
+\begin{zornlema}
+Sigui $A$ un conjunt no buit amb una relació d'ordre $\leq$. Si tota cadena $\mathcal{C}$ de $A$ té alguna fita superior a $A$ aleshores $A$ té elements maximals.
+\end{zornlema}
+\begin{teorema}
+	$R$ té algun ideal maximal
+	\begin{proof}
+		Considerem el conjunt $A=\{I\barra I\text{ ideal de } R,I\neq R\}$.$A$ no és buit ja que $(0)$ hi és. L'ordenem segons la relació $\subseteq$ inclusió de conjunts. És evident que és d'ordre. Veurem que tota cadena de $A$ té una fita superior a $A$. Prenem $\mathcal{C}\subseteq A$
+		
+		Considerem $$J=\bigcup_{I_i\in\mathcal{C}}I_i$$
+		Si $x,y\in J$ aleshores $x\in I_1$ i $y\in I_2$ per certs $I_1,I_2\in \mathcal{C}$. Suposem $I_1\subseteq I_2\im x,y\in I_2\implies x-y\in I_2$. Això implica $x-y\in J$. Ara si $x\in J$ i $r\in R$ seguint el mateix raonament tenim $rx\in J$ i $J$ és ideal de $R$. 
+		
+		Veiem que $J$ és fita superior de $\mathcal{C}$. Primer veurem que $J$ és de $A$. Suposem $J=R\im 1\in J\im 1\in I_i$ per cert $i$. Això implica $I_i=R$ la qual cosa és una contradicció. Tenim doncs $J\in A$ i $I_i\in J$ per tot $I_i\in\mathcal{C}$. En particular $J$ és fita superior de $\mathcal{C}$ i pel lema de Zorn $R$ té elements maximals.
+	\end{proof}
+\end{teorema}
+De forma similar es pot demostrar el següent teorema
+\begin{teorema}
+	Sigui $K$ un cos. Tot $K$-espai vectorial té una base.
+\end{teorema}
+\section{El cos de fraccions d'un domini}
+Com a exemple podríem construir $\mathbb{Q}$ a partir de $\mathbb{Z}$. Més generalment ho farem per un DI $R$ commutatiu.
+
+Considerem $A=\{(a,b)\in R\times R\barra b\neq 0\}=R\times R*$ amb $R*=R\setminus \{0\}$. Definim a $A$ la relació $(a,b)\sim (c,d)\implies ad=bc$. És fàcil veure que $\sim$ és d'equivalència. Evidentment $(a,b)\sim(a,b)$. D'altra banda si $(a,b)\sim(c,d)$ llavors $ad=bc\implies cb=da\implies (c,d)\sim(a,b)$. Finalment si $(a,b)\sim (c,d)$ i $(c,d)\sim (e,f)$ tenim $ad=bc$ i $cf=de$. Hem de veure que $af=be$. Tenim $adf=bcf=bde\implies af=be$ per ser $R$ domini.
+
+Considerem doncs el conjunt quocient $A/\sim$ i denotem $\tfrac{a}{b}=\bar{(a,b)}$. Definim les operacions suma i producte:
+$$\frac{a}{b}+\frac{c}{d}=\frac{ad+bc}{bd}$$
+$$\frac{a}{b}\cdot\frac{c}{d}=\frac{ac}{bd}$$
+Es comprova directament que aquestes operacions són ben definides, ço és, que no depenen del representant escollit.
+
+Igualment es poden comprovar les propietats de cos per $A/\sim$. Escriurem $\mathcal{F}=A/\sim$ per denotar el cos de fraccions de $R$.
+
+Podem entendre el que acabem de fer d'acord amb:
+$$f:R\hookrightarrow\mathcal{F}$$
+$$\qquad x\mapsto \frac{x}{1}$$ 
+que es tracta d'un morfisme d'anells injectius. Això és perquè: $$f(x+y)=\frac{x}{1}+\frac{y}{1}=f(x)+f(y)$$
+$$f(xy)=\frac{xy}{1}=f(x)f(y)$$
+$$f(1)=\frac{1}{1}\in\mathcal{F}$$
+
+\begin{teorema}
+Sigui $R$ un DI commutatiu amb 1. Sigui $\mathcal{F}$ el cos de fraccions de $R$. Sigui $K$ un cos tal que $R\subseteq K$. Aleshores existeix un únic morfisme de cossos $f:\mathcal{F}\longrightarrow K$ tal que $f|_R=\id$. En particular $\mathcal{F}\cong f(K)\subseteq K$.
+\begin{proof}
+	S'ha de complir que $f(\frac{a}{b})=f(\frac{a}{1}\frac{1}{b})=f(a)f(\frac{1}{b})=a\inv{f(b)}=a\inv{b}\in K$. Precisament definim $f$ així, és a dir $f(\frac{a}{b})=a\inv{b}\in K$. Queda comprovar que $f$ és morfisme de cossos.
+\end{proof}
+\end{teorema}
+\chapter{Divisibilitat i factorització}
+En aquesta secció. $R$ serà un DI commutatiu i com sempre amb unitat.
+\section{Primers conceptes, mcd i mcm}
+\begin{definicio}
+	Siguin $a,b\in R$. Diem que $a$ divideix $b$, $a\mid b$ si existeix $c\in R$ tal que $b=ac$. En aquest cas diem també que $b$ és múltiple de $a$.
+\end{definicio}
+
+Observem doncs que si $a\in R$ aleshores $n\mid a$ si $n\in U(R)$ ja que $a=n(\inv{n}a)$ i igualment $an\mid a$ en tant que $a=(an)\inv{n}$.
+Als elements invertibles de $R$ els direm unitats. Així doncs les unitats i $an$ per $n\in U(R)$ són sempre divisors obvis de $a$.
+
+També si $a,b$ són diferents de 0, $a\mid b$ i $b\mid a$ implica $b=ac$ i $a=bc'$ per certs $c,c'\in R$. Així $b=bc'c\im 1=c'c$. És a dir, $a$ i $b$ només difereixen en una unitat. Recíprocament tenim que si $a=bn$ amb $n$ unitat llavors evidentment $a\mid b$ i $b\mid a$. Ara si $a=0$ i $0\mid b$ aleshores $b=0$.
+
+\begin{definicio}
+	Diem que $a,b\in R$ són associats si $a=bu$ amb $u\in U(R)$. Escriurem $a\sim b$.
+\end{definicio}
+
+\begin{proposicio}
+	$\sim$ és d'equivalència
+	\begin{proof}
+		Evidentment $a\sim a$. Igualment si $a=bu$ tenim $b=a\inv{u}$. I si $a=bu$ i $b=cu'$ tenim $a=cu'u$ amb $u'u\in U(R)$.
+	\end{proof}
+\end{proposicio}
+Observem ara que si $b\mid a$ llavors $a\in (b)$ amb la qual cosa $(a)\subseteq (b)$. Si $a\mid b$ i $b\mid a$ aplicant l'anterior es tenen les dues inclusions i $(a)=(b)$.
+\begin{definicio}
+	Diem que $d$ és un mcd de $a$ i $b$ i posem $d=\mcd(a,b)$ si:\begin{enumerate}
+		\item $d\mid a$ i $d\mid b$
+		\item Si $\exists d'\in R$ tal que $d'\mid a$ i $d'\mid b$ llavors $d'\mid d$.
+	\end{enumerate}
+Diem que $m$ és un mcm de $a$ i $b$ i posem $m=\mcm(a,b)$ si:
+\begin{enumerate}
+	\item $a\mid m$ i $b\mid m$\item Si $\exists m'\in R$ tal que $a\mid m'$ i $b\mid m'$ llavors $m\mid m'$.
+\end{enumerate}
+\end{definicio}
+No pensem però que per tot $a,b\in R$ existeixen mcm i mcd. Per exemple a $\mathbb{Z}[\sqrt{-3}]$ els elements 2 i $1+\sqrt{-3}$ tenen mcd però no mcm. Els elements $4$ i $2+2\sqrt{-3}$ no tenen ni mcd ni mcm.
+
+De fet, en general l'existència de mcm implica que existeix mcd. Suposant que $m=mcm(a,b)$ aleshores tenim $a\mid ab$ i $b\mid ab$. Per definició de mcm tenim $m\mid ab$ i podem considerar $\tfrac{ab}{m}$. Precisament aquest element és un mcd de $a$ i $b$. Es pot veure provant que compleix les hipòtesi de mcd. Aquests tampocs han de ser únics i per exemple quan escrivim $d=\mcd(a,b)$ estem dient que $d$ és un mcd de $a$ i $b$.
+
+Considerant ara $d=\mcd(a,b)$ tenim per definició $d\mid a$ i $d\mid b$ de manera que $(a)\subseteq (d)$ i $(b)\subseteq(d)$. Per tant $(a)+(b)\subseteq (d)$. Generalment aquesta inclusió no és una igualtat. No obstant això a $\mathbb{Z}$ i a $K[x]$ amb $K$ cos la identitat de Bézout ens dóna l'altra inclusió. Com que existeixen $\alpha,\beta\in R$ tals que $d=\alpha a+\beta b$ tenim $d\in (a)+(b)$ i així$(a)+(b)= (d)$.
+
+Més propietats del mcm i del mcd, suposant que existeixen, són:
+\begin{enumerate}
+	\item Si $d=\mcd(a,b)$, $m=\mcm(a,b)$ i $u\in U(R)$ llavors $du=\mcd(a,b)$ i $mu=\mcm(a,b)$. Veiem-ho pel mcd. Escriurem $d'=du$. Com que $d\mid a$ i $d\mid b$ existeixen $\alpha,\beta\in R$ tals que $a=\alpha d=\alpha d'\inv{u}$ i $b=\beta d=\beta d'\inv{u}$. Així $d'\mid a,b$. I si $c\mid a$ i $c\mid b$ tenim $c\mid d=d'\inv{u}$. D'aquesta forma per cert $c'$ hom té $d'\inv{u'}=cc'\Leftrightarrow d'=cc'u$ i $c\mid d'$ i $d'$ és mcd de $a$ i $b$.
+	\item Si $d,d'$ són mcd de $a$ i $b$ aleshores $d\sim d'$. Si els dos són diferents de 0 tenim $d\mid d'$ i $d'\mid d$ i per tant $d\sim d'$. Si un dels dos és zero llavors $a=b=0$.
+	\item $\mcd(a,0)=a$ i $\mcm(a,0)=0$.
+	\item Si $d$ és un mcd de $a$ i $b$ podem escriure $a=a'd$ i $b=b'd$. Així doncs $\mcd(a',b')=1$. Evidentment 1 divideix els dos. Suposem ara $c\mid a'$ i $c\mid b'$. Aleshores existeixen $\alpha,\beta\in R$ tals que $a'=\alpha c$ i $b'=\beta c$. Per tant $a=a'd=\alpha cd$ i $b=b'd=\beta c d$ de manera que $cd$ divideix $a$ i $b$. Per definició de $d$, $ca\mid d$ i $d $ és de la forma $d=\gamma cd\Leftrightarrow1=\gamma c$ per cert $\gamma$.
+	\item $c\in R$ també com $a$ i $b$. Suposant que $\mcd(ca,cb)$ i $\mcd(a,b)$ existeixen tenim $\mcd(ca,cb)=c\cdot \mcd(a,b)$. Veiem-ho. \begin{itemize}
+	\item 	Si $a=0$ tenim $\mcd(0,cb)=cb=c\cdot\mcd(0,b)=cb$.
+	\item 	Si $b=0$ tenim $\mcd(ca,0)=ca=c\cdot\mcd(a,0)=ca$.
+	\item Si $c=0$ tenim $\mcd(0,0)=0=0\cdot\mcd(0,0)=0$.
+	\end{itemize}
+Suposant $a,b,c$ diferents de 0 escrivim $d=\mcd(a,b)$ i $d'=\mcd(ca,cb)$. Així $cd\mid ca$ i $cd\mid cb$ de manera que $cd\mid d'\Leftrightarrow d'=\gamma cd$ per cert $\gamma$. També existeixen $\alpha,\beta$ tals que $ca=\alpha d'$ i $cb=\beta d'$. Escrivint com sempre $a=a'd$ i $b=b'd$ tenim $ca=ca'd=\alpha d'=\alpha\gamma cd\Leftrightarrow a'=\gamma c\Leftrightarrow \gamma\mid a'$ i anàlogament per $cb$ tenim $\gamma\mid b'$. Conseqüentment tindrem $\gamma\mid 1$ i $\gamma $ és invertible. Així doncs $d'\sim cd$ i $cd$ és mcd de $ca,cb$.
+\item Suposant $a,b$ diferents de 0, suposem que $m$ és un mcm de $a$ i $b$. Si $ab=mc$ per cert $c\in R$ aleshores $c$ és un $\mcd $ de $a$ i $b$. Tenim $a\mid m$ i $b\mid m$ de manera que per certs $\alpha,\beta$ tenim $m=\alpha a=\beta b$. Llavors $$ab=mc=\alpha ac\im c\mid b$$
+$$ab=mc=\beta bc\im c\mid a$$
+Suposem ara $e\mid a$ i $e\mid b$. Escrivint $a=\alpha' e$ i $b=\beta' e$ podem considerar $\alpha'\beta'e=\gamma m$ ja que $\alpha'\beta' e$ és múltiple de $a$ i $b$ i en particular de $m$. Així $ab=\alpha'\beta'e e=\gamma m e=mc\Leftrightarrow\gamma e=c\Leftrightarrow e\mid c$ com volíem veure.
+\end{enumerate}
+\begin{proposicio}
+	Existeix $\mcd$ per a tots $a,b\in R$ si i només si existeix mcm per a tots $a,b\in R$
+\end{proposicio}
+\begin{proposicio}
+	Si el $\mcd$ existeix és associatiu. És a dir, si $a,b,c\in R$ aleshores:$$\mcd(a,\mcd(b,c))=\mcd(\mcd(a,b),c)$$
+\end{proposicio}
+\begin{lemaeuclid}
+	Suposem que el $\mcd$ existeix per tota parella d'elements. Si $n\mid ab$ i  $\mcd(n,a)=1$ llavors $n\mid b$.
+\end{lemaeuclid}
+\section{Primers i irreductibles. Dominis de factorització única}
+$R$ continua sent un DI commutatiu i com sempre amb unitat.
+\begin{definicio}
+	Un element $p\in R$ diferent de 0 no invertible és diu que es primer si sempre que $p\mid ab$ amb $a,b\in R$ llavors $p\mid a$ o $p\mid b$.
+\end{definicio}
+
+ Observem que $p$ és primer si i només si $(p)$ és un ideal primer.
+ \begin{definicio}
+ 	Un element $a\neq 0$ i no invertible es diu que és irreductible o àtom si sempre que $a=bc$ amb $b,c\in R$ llavors $b$ és invertible o $c$ és invertible.
+ \end{definicio}
+\begin{proposicio}
+	Si $p$ és primer llavors $p$ és irreductible.\begin{proof}		
+Suposem $p=ab$. Com que $p$ és primer $p\mid a $ o $p\mid b$. Suposem sense pèrdua de generalitat $p\mid a\Leftrightarrow a=\alpha p$ per cert $\alpha$. Aleshores $p=ab=\alpha p b\im 1=\alpha b$ i $b$ és invertible.	
+\end{proof}
+\end{proposicio}
+\begin{definicio}
+	$R$ és domini de factorització única (DFU) si:\begin{enumerate}
+		\item Si $a$ és diferent de 0 i no invertible aleshores $a=p_1\cdot\ldots\cdot p_r$ amb els $p_i$ irreductibles.
+		\item Si $a=p_1\cdot\ldots\cdot p_r=q_1\cdot\ldots\cdot q_s$ llavors $r=s$ i reordenant si cal tenim $p_i\sim q_i$ per tot $i$.
+	\end{enumerate}
+\end{definicio}
+\begin{proposicio}
+	Siguin $p,q\in R$ primers i $a,b\in R$ irreductibles, aleshores:\begin{enumerate}
+		\item $pu$ és primer per tot $u\in U(R)$.
+		\item $au$ és irreductible per tot $u\in U(R)$.
+		\item $p\mid q$ si i només si $p\sim q$.
+		\item $a\mid b$ si i només si $a\sim b$.
+	\end{enumerate}
+\end{proposicio}
+\begin{teorema}
+	$R$ és DFU si i només si tot irreductible és primer i tot element $a$ diferent de 0 i no invertible descomposa com a producte d'irreductibles, ço és $a=p_1\cdot\ldots\cdot p_n$ amb $p_i$ irreductibles.
+	\begin{proof}
+		Suposem $R$ DFU. Hem de veure que tot irreductible és primer. Sigui $p\in R$ irreductible suposem $p\mid ab$. Posem $a=p_1\puntets p_r,b=q_1\puntets q_s$ amb factors irreductibles. La descomposició de $ab$ en irreductibles és $ab=p_1\puntets p_rq_1\puntets q_s$ i també $ab=p\alpha$ per cert $\alpha=\alpha_1\puntets\alpha_t\in R$ amb els $\alpha_i$ irreductibles. Aleshores tenim $p\alpha_1\puntets\alpha_t=p_1\puntets p_rq_1\puntets q_s$. Com que $R$ és DFU tenim $t+1=r+s$ i $p$ és associat a algun $p_i$ o $q_i$. Per tant $p\mid a$ o $p\mid b$.
+		
+		Recíprocament suposem que es compleixen les dues condicions enunciades. Només hem de veure la unicitat de la descomposició. Sigui $a\in R$ llavors $a=p_1\puntets p_r=q_1\puntets q_s$ amb els $p_i$ i els $q_i$ irreductibles. Ara $p_1\mid q_1(q_2\puntets q_s)$. Com que $p_1$ és primer $p_1\mid q_1$ amb la qual cosa $p_1\sim q_1$ o bé $p_1\mid q_2\puntets q_s $. Repetint aquest mateix argument veiem que sense pèrdua de generalitat podem suposar $p_1\mid q_1$. Així tenim per $u\in U(R)$ que $q_1=up_1$ i llavors $p_2\puntets p_r=uq_2\puntets q_s$. Repetint aquest procés ens podem trobar davant tres situacions:
+		\begin{itemize}
+			\item Si $r<s$ llavors $1=u_1\puntets u_rq_{r+1}\puntets q_s\im q_{r+1}\puntets q_s$  són invertibles. Contradicció.
+			\item Si $s<r$ llavors $u_1\puntets u_s=p_{s+1}\puntets p_r\im p_{s+1}\puntets p_r$  són invertibles. Contradicció.
+		\end{itemize}
+	Ha de ser doncs $r=s$ i tenim per tot $i$ que $p_i\sim q_i$.
+	\end{proof}
+\end{teorema}
+\begin{proposicio}
+	\label{md}
+	Suposem $R$ DFU. Suposem $a,b\in R$ diferents de 0 i no invertibles. Posem $a=p_1^{\alpha_1}\puntets p_r^{\alpha_r},b=p_1^{\beta_1}\puntets p_r^{\beta_r}$ amb els $p_i$ irreductibles, $p_i\neq p_j$ si $i\neq j$ i $\alpha_i,\beta_i\geq 0$. Aleshores $d=\prod_{i=1}^{r}p_i^{\min(\alpha_i,\beta_i)}$ és un $\mcd$ de $a$ i $b$ i $m=\prod_{i=1}^{r}p_i^{\max(\alpha_i,\beta_i)}$ és un $\mcm$.\begin{proof}
+		Ho fem per $d$. Evidentment $d\mid a$ i $d\mid b$. Sigui $c\in R$ tal que $c\mid a$ i $c\mid b$. Aleshores $c=up_1^{\gamma_1}\puntets p_r^{\gamma_r}$ amb $\gamma_i\leq\alpha_i,\beta_i$ i $u$ unitat. Per tant $\gamma_i\leq\min(\alpha_i,\beta_i)$ i $c\mid d$.
+	\end{proof}
+\end{proposicio}
+\subsection{Dominis d'ideals principals i dominis de factorització única}
+L'objectiu principal d'aquesta part és demostrar que tot domini d'ideals principals és domini de factorització única.
+\begin{definicio}
+	Diem que $R$ és un domini d'ideals principals (DIP) si tot ideal de $R$ és principal.
+\end{definicio}
+\begin{proposicio}
+	Suposem $R$ DIP. Si $I_1\subseteq I_2\subseteq I_3\subseteq\ldots$ és una cadena d'ideals de $R$ aleshores existeix $n$ tal que $I_n=I_{n+1}=\ldots$.\begin{proof}
+		Fem $I=\bigcup_i I_i$ que és un ideal ja que cadascun està contingut al següent. Com que $R$ és DIP$\im I=(a)$ per cert $a\in R$. Així $a\in I_n$ per cert $n$ i tenim $I=I_n$.
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Si $R$ és un DIP aleshores tot irreductible de $R$ és primer.\begin{proof}
+		Suposem que $p$ és irreductible. Suposem que $p\mid ab$. Si $p\mid a$ ja està. Suposem $p\nmid a$. Considerem doncs $(a)+(p)=(c)$ per cert $c\in R$. Així $p\in (c)$, és a dir $p=ce$ per cert $e\in R$. Per hipòtesi, $c$ és invertible o $e$ és invertible. Si $e$ és invertible llavors $c=p\inv{e}\im c\in (p)$ i així $(c)=(p)$. Aleshores $(a)+(p)=(p)\im a\in (p)\im p\mid a$ la qual cosa és absurda. Llavors $c$ és invertible i $(c)=R$. 
+		
+		D'aquesta manera $(a)+(p)=(1)=R$ existeixen $\alpha,\beta\in R$  tals que $\alpha a+\beta p=1$. Multiplicant per $b$ hom troba $b=b\alpha a+b\beta p$ i $p\mid b$.
+	\end{proof}
+\end{proposicio}
+\begin{teorema}
+	Si $R$ és DIP aleshores $R$ és DFU.\begin{proof}
+		Sigui $a\neq 0$ i no invertible. Suposem que $a$ no factoritza en irreductibles. En particular $a$ no és irreductible i si $a=a_1b_1$ llavors $a_1$ i $b_1$ no són invertibles. Aleshores $a_1$ o $b_1$ no descomponen com a producte d'irreductibles. Suposem $a_1$ així. Evidentment $(a)\subseteq (a_1)$. A més no es pot donar que $(a_1)\subseteq (a)$ ja que si $a_1=\alpha a\im 1a=\alpha a b_1\im b_1$ invertible.
+		
+		Repetint aquest argument amb $a_1$ podem trobar una cadena $(a) \subseteq (a_1)\subseteq (a_2)\subseteq\ldots$ no estacionària, la qual cosa és una contradicció amb el fet que $R$ és DIP. Per tant tot element factoritza com a producte d'irreductibles.
+		
+		Com que a més en un DIP tot irreductible és primer tenim $R$ DFU.
+	\end{proof}
+\end{teorema}
+\begin{proposicio}
+	Si $R$ és DIP i $a,b\in R$. Aleshores $d$ és un $\mcd$ de $a$ i $b$ si i només si $(a)+(b)=(d)$.\begin{proof}
+		Suposem que $\mcd(a,b)=d$. Com que $R$ és DIP tenim $(a)+(b)=(d')$ per cert $d'$.  Així doncs $(a),(b)\subseteq (d')$ i tenim $d'\div a$ i $d'\div b$. Suposant $c\div a$ i $c\div b$ veiem que $d'=\alpha a+\beta b$ per certs $\alpha,\beta\in R$ i per tant $c\div d'\im d'$ és $\mcd$ de $a$ i $b$. D'aquesta manera $d'\sim d$ i tenim $(a)+(b)=(d')=(d)$.
+		
+		Recíprocament si $(a)+(b)=(d)$ ja hem vist que $d$ és un $\mcd$ de $a$ i $b$.
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Suposem $R$ DFU i $a,b,c\in R$. Aleshores:\begin{enumerate}
+		\item $ab=\mcd(a,b)\mcm(a,b)$.\item Si $d=\mcd(a,b)$ i $a=a'd$ 
+		i $b=b'd$ llavors $\mcd(a',b')\sim 1$.
+		\item Si $a\mid bc$ i $\mcd(a,b)=1$ llavors $a\mid c$
+	\end{enumerate}\begin{proof}
+	1 és immediat a partir de la Proposició \ref{md}.
+\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Suposem $R$ DIP. Llavors tot ideal $I\neq(0)$ primer de $R$ és maximal.\begin{proof}
+		Suposem $J$ ideal de $R$ tal que $I\subseteq J\subseteq R$. Com que $R$ és DIP existeixen $x,y\in R$ tals que $I=(x)\subseteq(y)=J$. Amb això $x\in (y)$, ço és, existeix $\lambda\in R$ tal que $x=\lambda y$. Però $(x)$ és primer i així si $y\in (x)$ tenim $I=J$ i si $\lambda\in(x)$ tenim per cert $\mu\in R$ que $\lambda=\mu x\im x=\mu x y\Leftrightarrow1=\mu y$. Això ens diu que $y$ és una unitat i $J=R$.
+	\end{proof}
+\end{proposicio}
+Amb això ja tenim que a un DIP un ideal és primer si i només si és maximal.
+\begin{proposicio}
+	Sigui $R$ DFU i $a,b,c\in R$ aleshores:\begin{enumerate}
+		\item $ab\sim\mcm(a,b)\mcd(a,b)$\item Si $d=\mcd(a,b)$ i $a=a'd,b=b'd\im \mcd(a',b')\sim 1$\item Si $a\div bc$ i $\mcd(a,b)=1\im a\div c$
+	\end{enumerate}
+\end{proposicio}
+\section{Dominis euclidians}
+\begin{definicio}
+	Diem que $R$ DI és un domini euclidià (DE) si existeix una aplicació $d:R\setminus\{0\}\longrightarrow \mathbb{N}\cup \{0\}$ tal que:
+	\begin{enumerate}
+		\item Si $a,b\in R$ i $b\neq 0$, existeixen $q,r\in R$ tals que $a=bq+r$ on $r=0$ o $d(r)<d(b)$.
+		\item $d(a)\leq d(ab)$.
+	\end{enumerate}
+A $d$ se l'anomena funció euclidiana.
+\end{definicio}
+\begin{proposicio}
+	Sigui $R$ un DE. Aleshores $d(1)=\min_{x\in R\setminus\{0\}}\{d(x)\}$. A més, si $u\neq 0$, és invertible si i només si $d(1)=d(u)$.\begin{proof}
+		Sigui $x\in R$ diferent de zero fem $d(1)\leq d(x\cdot 1)=d(x)$.
+		
+		Suposem $u$ invertible. Tenim $d(1)\leq d(u)$. Així doncs $d(u)\leq d(u\inv{u})=d(1)$ i $d(u)=d(1)$.
+		
+		Recíprocament si $d(u)=d(1)$ llavors fem $1=qu+r$ de manera que $d(r)<d(u)=d(1)$ la quial cosa no pot ser. Per tant $r=0$ i $u$ invertible.
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Si $R$ és DE aleshores $R$ és DIP.
+	\begin{proof}
+		Sigui $I$ un ideal de $R$ diferent de $(0)$ (Si $I=\{0\}=(0)$). Sigui $b\in I$ diferent de 0 tal que $d(b)$ és mínim entre els $d(x)$ per $x\in I,x\neq0$. Veurem que $I=(b)$. Si $a\in I$ fem $a=bq+r$ amb $r=0$ o $d(r)<d(b)$. Però $r=a-bq\in I\im r=0$ per la tria de $b$
+	\end{proof}
+\end{proposicio}
+
+Observem que de moment tenim la següent cadena d'implicacions $$\text{DE}\im \text{DIP}\im \text{DFU}\im \text{DI}$$
+\begin{proposicio}
+	Sigui $R$ DI, suposem que a $R$ hi tenim $\mcm$ i $\mcd$. Si $a=bq+r$ aleshores $\mcd(a,b)\sim\mcd(b,r)$.
+	\begin{proof}
+		Si $c\div a,b$ llavors $c\div r=a-bq\im c\div b,r\im \mcd(a,b)\div\mcd(b,r)$.
+		
+		Si $c\div b,r\im c\div a=bq+r\im c\div a,b\im \mcd(b,r)\div\mcd(a,b)$.
+	\end{proof}
+\end{proposicio}
+Seguint aquesta proposició podem emprar l'algorisme d'Euclides per trobar el màxim comú divisor de dos elements de $R$. L'únic que hem de fer és fer la divisió euclidiana i anar aplicant el resultat anterior.
+\section{Els enters de Gauss }
+S'anomena enters de Gauss al subanell de $\mathbb{C}$:
+$$\mathbb{Z}[i]=\{a+bi\barra a,b\in \mathbb{Z}\}$$
+Es tracta d'un domini d'integritat. Considerant l'aplicació norma $N:\mathbb{Z}[i]\longrightarrow\mathbb{N}\cup\{0\}$ donada per $N(a+bi)=a^2+b^2$ tenim si $z,w\in  \mathbb{Z}[i]$:
+\begin{enumerate}
+	\item $N(z)\geq 0$
+	\item $N(z)=0\implies z=0$
+	\item $N(zw)=N(z)N(w)$
+\end{enumerate}
+\begin{proposicio}
+	$\mathbb{Z}[i]$ és DE.
+	\begin{proof}
+		Considerarem l'aplicació norma $N$. Siguin $a,b\in \mathbb{Z}[i]$ amb $b$ diferent de 0. Tindrem $a=a_1+a_2i,b=b_1+b_2i$. A $\mathbb{C}$ podem considerar.
+		$$\frac{a}{b}=\frac{a_1b_1+a_2b_2}{b_{1}^{2}+b_{2}^{2}}+\frac{a_2b_1-b_2a_1}{b_1^2+b_{2}^{2}}i$$
+		Així podem prendre $q_1,q_2\in\mathbb{Z}$ tals que $|\Re(\frac{a}{b})-q_1|<\frac{1}{2}$ i $|\mathfrak{I}(\frac{a}{b})-q_2|<\frac{1}{2}$. Observem que no necessàriament seran únics. Fem $q=q_1+iq_2$. 
+		
+		Sigui ara $r=a-bq$ fem si $r\neq 0$:
+		$$N(\frac{r}{b})=N(\frac{a}{b}-q)=(\Re(\frac{a}{b})-q_1)^2+(\mathfrak{I}(\frac{a}{b})-q_2)^2\leq\frac{1}{4}+\frac{1}{4}=\frac{1}{2}<1$$
+		Això implica que $N(r)<N(b)$ de forma que $N$ serveix com a funció euclidiana.
+	\end{proof}
+
+\end{proposicio}
+Amb això sabem que els invertibles a $\mathbb{Z}[i]$ seran aquells $u$ tals que $N(u)=1$. Tenim $u=a+bi\im N(u)=a^2+b^2=1$ i només hi ha quatre possibilitats: $u=\pm 1$ o $u=\pm i$.
+
+\subsection{Primers a $\mathbb{Z}[i]$}
+Observem que als enters de Gauss 2 deixa de ser primer com demostra:
+$$2=(1+i)(1-i)$$
+\begin{lema}
+	Sigui $z\in \mathbb{Z}[i]$. Aleshores $z$ és irreductible a $\mathbb{Z}[i]$ si i només si $\bar{z}$ és irreductible a $\mathbb{Z}[i]$
+	\begin{proof}
+		Observem que $\alpha\in \mathbb{Z}[i]$ és unitat si i només el seu conjugat ho és puix tenen la mateixa norma.
+		
+		Suposem $\bar{z}$ irreductible. Suposant $z=\alpha\beta,\;\alpha,\beta\in \mathbb{Z}[i]$ tenim que o bé $\alpha$ o bé $\beta $ són unitats perquè per $\bar{z}=\bar{\alpha}\bar{\beta}$ o bé $\bar{\alpha}$ o bé $\bar{\beta}$ ho són. Anàlogament el recíproc.	\end{proof}
+\end{lema}
+\begin{lema}
+	Sigui $z=a+bi\in\mathbb{Z}[i]$ irreductible amb $a\neq 0$ i $b\neq 0$. Aleshores $z\sim \bar{z}$ si i només si $z=\pm 1\pm i$.
+	\begin{proof}
+		Suposem primer $z=\pm 1 \pm i$. Llavors si $z=\alpha\beta$ tenim $N(z)=2=N(\alpha)N(\beta)$. Hi ha dues possibilitats. Les dues impliquen $z$ irreductible.
+		
+		Recíprocament, suposem $z\sim\bar{z}$. Com que tenim les unitats de $\mathbb{Z}[i]$ determinades:
+		\begin{itemize}
+			\item $z=\bar{z}\im b=0\im$ No pot ser.
+			\item $z=-\bar{z}\im a=0\im$ No pot ser.
+			\item $z=i\bar{z}\im a=b\im z=a(1+i)$.
+			\item $z=-i\bar{z}\im a=-b\im z=a(1-i)$.
+		\end{itemize}
+	El fet que $z$ sigui irreductible implica el resultat puix $a$ ha de ser unitat.
+	\end{proof}
+\end{lema}
+\begin{teorema}
+	Sigui $p$ primer a $\mathbb{Z}$ positiu. Aleshores $p$ és reductible a $\mathbb{Z}[i]$ si i només si $p=a^2+b^2$.
+	\begin{proof}
+		Suposem que $p=a^2+b^2$. Aleshores $p=(a+bi)(a-bi)$ amb $a,b\neq 0$ ja que $p$ és primer. Per tant $p$ és reductible.
+		
+		Recíprocament, suposem que $p$ és reductible. Si $p=2$ llavors tenim $p=1+1$. Suposem $p\neq 2$. Posem $p=zw$ amb $z$ irreductible i $w$ no unitat. Fem $z=a+bi,a,b\in\mathbb{Z}$. Si per exemple $a=0$ tenim $p=(bi)(c+di)=bci-bd\im bc=0\im p=i-bq\im b(-d)=p$ a $\mathbb{Z}$. Això implica contradicció puix o bé $b=1$ o bé $d=1$ i ni $z$ ni $w$ són invertibles. Per tant $a\neq 0$.
+		
+		Si suposem ara $b=0$ llavors $z=a$ i $p=a(c+di)$. Observem doncs que ha de ser $d=0$ ja que $p\in\mathbb{Z}$. Però això implica $p=ac$ amb $p$ primer la qual cosa també és una contradicció (raonem igual que abans).
+		
+		Tenim doncs $z=a+bi$ amb $a,b\neq 0$. Ara com que $p\in\mathbb{Z}$ $p=\bar{p}=zw=\bar{z}\bar{w}$ i $\bar{z}$ és irreductible per ser-ho també $z$. Distingim ara dos casos:
+		\begin{itemize}
+			\item $z$ i $\bar{z}$ són associats $\im N(z)=2$ i $p^2=N(p)=N(z)N(w)=2N(w)\im 2\mid p^2\im 2\mid p\im p=2$ la qual cosa és una contradicció.
+			\item $z$ i $\bar{z}$ no poden ser associats llavors. Per tant són coprimers i tenim $p=zw=\bar{z}\bar{w}\im z\div \bar{z}\bar{w}\im z\div \bar{w}$. D'aquesta forma $p=z\bar{z}(c+di)=(a^2+b^2)(c+di)$. Però com que $p$ és enter i és primer positiu ha de ser $c=1$ i $d=0$. Per tant $p=a^2+b^2$.
+		\end{itemize}
+	\end{proof}
+\end{teorema}
+\begin{teorema}
+	Sigui $z=a+ib\in\mathbb{Z}[i]$ amb $a\neq 0$ i $b\neq 0$. Aleshores $z$ és irreductible a $\mathbb{Z}[i]$ si i només s $N(z)=a^2+b^2$ és primer a $\mathbb{Z}$.
+	\begin{proof}
+		Suposem $N(z)$ primer a $\mathbb{Z}$. Si $z$ no és irreductible a $\mathbb{Z}[i]$ llavors $z=\alpha\beta$ amb $\alpha,\beta\in\mathbb{Z}[i]$ no invertibles. Per tant $N(z)=N(\alpha)N(\beta)$ amb $N(\alpha),N(\beta)>1$ contradiu que $p$ és primer a $\mathbb{Z}$.
+		
+		Recíprocament suposem $z$ és irreductible. Considerem $\bar{z}$ que també és irreductible. Tenim dos casos:
+		\begin{itemize}
+			\item Si $z$ i $\bar{z}$ no són primers  com que són irreductibles són associats i per tant $N(z)=2$ és també primer a $\mathbb{Z}$.
+			\item Si $z$ i $\bar{z}$ són coprimers tenim $N(z)=a^2+b^2=z\bar{z}$. Suposem $N(z)=rs$ amb $r,s\in\mathbb{Z}$ i $z\bar{z}=rs$. Com que $z$ és irreductible podem suposar $z\div r$. Posem ara $r=zw\in\mathbb{Z}$. $\bar{r}=r=\bar{z}\bar{w}\im \bar{z}\div r $ a $\mathbb{Z}[i]$ i igualment $\bar{z}\div zw\im \bar{z}\div w\im w=\bar{z}w'$ per cert $w'$. D'aquesta manera $r=z\bar{z}(w')=(a^2+b^2)w'\in\mathbb{Z}$. Tenim també $N(z)=a^2+b^2=(a^2+b^2)w's$. Fem $w'=c+di$ i així $r=(a^2+b^2)w'$. Ha de ser doncs $w'=c\in\mathbb{Z}$ i $d=0$. Finalment $a^2+b^2=(a^2+b^2)cs\im cs=1\im s=1 $ i hem acabat. 
+		\end{itemize}
+	\end{proof}
+\end{teorema}
+\begin{proposicio} (Congruència de Wilson)
+	Sigui $p$ primer a $\mathbb{Z}$. Llavors $$(p-1)!\equiv -1 \mod p$$
+\end{proposicio}
+\begin{teorema}
+	Sigui $p$ primer de $\mathbb{Z}$. Aleshores $p$ és irreductible a $\mathbb{Z}[i]$ si i només si $p\equiv 3 \mod 4$
+	\begin{proof}
+		Suposem $p\equiv 3 \mod 4$. Si $p$ no és irreductible a $\mathbb{Z}[i]$ llavors $p=a^2+b^2$ amb $a,b$ enters. A $\mathbb{Z}/(4)$ tenim $\bar{p}=\bar{a}^2+\bar{b}^2$. Cap combinació d'elements a $\mathbb{Z}/(4)$ dóna el resultat $\im$ $p$ ha de ser irreductible.
+		
+		Recíprocament suposem $p$ irreductible. Estudiem les possibilitats:
+		\begin{itemize}
+			\item $p\equiv 0 \mod 4\im$ $4\div p$ que és una contradicció puix $p$ és primer.
+			\item $p\equiv 2 \mod 4\im p=2+4\alpha\im 2(1+2\alpha)\im p=2$ que és una contradicció ja que 2 és reductible.
+			\item $p\equiv 1\mod 4$. Veurem que això implica $p$ reductible. Suposem $p$ irreductible. Considerem el grup multiplicatiu $(\mathbb{Z}/(p))^*$ que és cíclic. Per tant i tenint en compte que $4\div p-1$ tindrem que existeix un element $n$ d'ordre 4. En particular $n^2$ tindrà ordre 2 i llavors $n^2\equiv-1\mod p$ i $p\div n^2+1$ a $\mathbb{Z}$.
+			
+			Amb això $n^2+1=(n+i)(n-i)$. Com que hem suposat $p$ irreductible, ha de dividir $n+i$ o $n-i$. En qualsevol dels dos casos s'arriba a contradicció amb igualtats del tipus $\pm1=p\alpha,\alpha\in\mathbb{Z}$. Per tant $p$ ha de ser reductible.
+			
+		\end{itemize}
+	Ha de ser doncs $p\equiv 3\mod 4$.
+	\end{proof}
+\end{teorema}
+\section{Anells de polinomis}
+En aquest apartat $K$ serà sempre un cos.
+
+Recordem que a $K[x]=\{a_0+a_1x+\ldots+a_nx^n\barra a_i\in K\}$ tenim la suma i el producte de polinomis donades respectivament per:
+$$(a_0+a_1x+\ldots+a_nx^n)+(b_0+b_1x+\ldots+b_nx^n)=\sum_{i=0}^{n}(a_i+b_i)x^n$$
+$$(a_0+a_1x+\ldots+a_nx^n)(b_0+b_1x+\ldots+b_nx^n)=\sum_{k=0}^{m+n}\Big(\sum_{i+j=k} a_ib_j\Big)x^k$$
+
+Podem igualment definir \emph{avaluacions}. Sigui $\alpha\in K$ fix considerem $$\varphi:K[x]\longrightarrow K$$
+$$\qquad\quad a_0+a_1x+\ldots+a_nx^n\longmapsto a_0+a_1\alpha+\ldots+a_n\alpha^n$$
+que evidentment és morfisme d'anells.
+
+Més generalment tenim que si $K\subseteq S$  amb $S$ anell commutatiu i $\alpha\in S$ es fix llavors $$\varphi:K[x]\longrightarrow S$$
+$$\qquad\quad f(x)\longmapsto f(\alpha)$$ és morfisme d'anells.
+
+Tenim també la funció $\grau$ donada per:
+$$\grau:K[x]\longrightarrow \mathbb{N}\cup\{0\}$$
+$$ a_0+a_1x+\ldots+a_nx^n\longmapsto n\text{ si }a_n\neq0\qquad\quad$$
+En aquest cas sabem que es dóna $\grau(f(x)g(x))=\grau(f(x))+\grau(g(x))$.
+
+Algunes propietats de $K[x]$ són:
+\begin{enumerate}
+	\item És DI.\item $U(K[x])=K\setminus\{0\}$
+	\item Es compleixen les implicacions DE$\im$DIP$\im$DFU.
+	\item Si $f\in K[x]$ i $\grau(f)\geq 1$ llavors $f$ és irreductible si i només si $f$ no descompon en producte $f=f_1f_2$ amb $\grau(f_1),\grau(f_2)<\grau(f)$.
+	\item En general la irreductibilitat a $K[x]$ depén de $K$.
+\end{enumerate}
+
+Si ara considerem $R[x]$ amb $R$ DI tenim:
+\begin{enumerate}
+	\item $R[x]$ és DI igualment.\item $U(R[x])=U(R)$
+\end{enumerate}
+\begin{proposicio}
+	Si $R$ és DI aleshores els següents enunciats són equivalents:\begin{enumerate}
+		\item $R$ és cos.
+		\item $R[x]$ és DE.
+		\item $R[x]$ és DIP.
+		\begin{proof}
+			Si $R$ és cos llavors $R[x]$ és DE i si $R[x]$ és DE llavors és DIP. Suposem $R[x]$ DIP. Considerem $\psi:R[x]\longrightarrow R$ tal que $\psi(f)=f(0)$ per tot $f\in R[x]$. $\psi$ és evidentment epimorfisme d'anells. D'altra banda veiem també que $\ker(\psi)=(x)$. Pel 1r teorema d'isomorfia tenim:
+		$$R[x]/\ker(\psi)\cong R[x]/(x)\cong R$$ que és DI. Això implica que $(x)$ és primer. Com que $R[x]$ és DIP tot ideal primer $I$ diferent de $(0)$ és maximal. En particular $(x)$ és maximal a $R[x]$ i $R[x]/(x)$, isomorf a $R$, és cos. 	\end{proof}
+	\end{enumerate}
+\end{proposicio}
+\begin{definicio}
+	Sigui $R$ DI. Siguin $a_1,\ldots,a_n\in R$ diem que $d$ és un $\mcd$ de $a_1,\ldots,a_n$ si:
+	\begin{enumerate}
+		\item $d\mid a_1,\ldots,a_n$
+		\item $c\mid a_1,\ldots,a_n\im c\mid d$
+	\end{enumerate}
+\end{definicio}
+\begin{proposicio}
+	Sigui $R$ DI, $a_1,\ldots,a_n\in R$. Suposant que tota parella té $\mcd$ llavors:\begin{enumerate}
+		\item $\mcd(a_1,\ldots,a_n)=\mcd(\mcd(a_1,\ldots,a_{n-1}),a_n)$
+		\item Si $d=\mcd(a_1,\ldots,a_n)$ i posem $a_i=a_i' d$ com sempre aleshores $\mcd(a_1',\ldots,a_n')\sim 1$.
+	\end{enumerate}
+\end{proposicio}
+A partir d'ara en aquesta secció $R$ serà un DFU.
+\begin{definicio}
+Sigui $f(x)=a_0+a_1x+\ldots+a_nx^n\in R[x]$	direm que el contingut de $f$ és $c(f)=\mcd(a_0,a_1,\ldots,a_n)$. Diem que $f$ és primitiu si $c(f)\sim 1$.
+\end{definicio}
+\begin{lema}
+Si $f\in R[x]$ aleshores $f=c(f)f^*$ amb $f^*$ primitiu.
+A més si $f=\alpha \tilde{f}$ amb $\alpha\in R$ i $\tilde{f}$ primitiu, tindrem $\alpha\sim c(f)$ i $\tilde{f}\sim f^*$.
+\begin{proof}
+	Posem $f(x)=\sum_{i=0}^{n}a_ix^i$ i $c(f)=\mcd(a_1,\ldots,a_n)$. Com sempre $a_i=a_i'c(f)$.
+	Treient factor comú tenim la primera part:
+	$$f(x)=c(f)\sum_{i=0}^{n}a_i'x^n \text{ amb } \sum_{i=0}^{n}a_i'x^n \text{ primitiu.}$$
+	
+	Ara suposem $f=c(f)\sum_{i=0}^{n}a_i'x^n =\alpha \sum_{j=0}^{m}b_jx^j$. Com que dos polinomis són iguals si i només si els seus coeficients ho són tenim igualtats del tipus $a_i=c(f)a_i'=\alpha b_i$ i a més $m=n$. Així $\mcd(a_1,\ldots,a_n)=c(f)=\mcd(\alpha b_1,\ldots,\alpha b_n)=\alpha\mcd(b_1,\ldots,b_n)\im c(f)\sim \alpha$ ja que $\sum_{i=0}^{m}b_jx^j$ és primitiu. D'altra banda tenim $f=\alpha \tilde{f}=c(f) f^*$ i pel que acabem de veure també tenim $\tilde{f} \sim f^*$.
+\end{proof}
+\end{lema}
+\begin{lemagauss}
+	Siguin $f,g\in R[x]$ primitius. Aleshores $h=fg$ és primitiu.\begin{proof}
+		Suposem $h$ no primitiu. Aleshores existeix $p\in R$ irreductible tal que $p\mid c(h)$. Com que $R$ és DFU, $p$ és primer i per tant $(p)$ és primer. Conseqüentment $R/(p)$ és DI. Sabem que l'aplicació donada per $$\varphi:R[x]\longrightarrow R/(p)[x]$$
+		$$\sum_{i=0}^{n}a_ix^i\longmapsto\sum_{i=0}^{n}\bar{a_i}x^i$$ és un morfisme d'anells. Alehsores $\varphi(h)=0$ ja que $p\mid c(h)$. Així $\varphi(f)\varphi(g)=0$ i tant $\varphi(f)=0$ com $\varphi(g)=0$ $\im p\mid c(f)$ o $p\mid c(g)$ contradiuen el fet que $f$ i $g$ són primitius.
+	\end{proof}
+\end{lemagauss}
+\begin{col}
+Siguin $f,g\in R[x]$. Aleshores $c(fg)\sim c(f)c(g)$
+\begin{proof}
+	Posem $f=c(f)f*$ amb $f^* $ primitiu i $g=c(g)g^*$ amb $g^*$ primitiu. Llavors $fg=c(f)c(g)f^* g^*=c(fg)(fg)^*$ amb $(fg)^*$ primitiu. Pel lema de Gauss tenim $c(f)c(g)\sim c(fg)$.
+\end{proof}
+\end{col}
+\begin{teorema}
+	Sigui $f\in R[x]$ i sigui $\mathcal{F}$ el cos de fraccions de R aleshores són equivalents:\begin{enumerate}
+		\item $\grau(f)\geq 1$ i $f$ és irreductible a $R[x]$.\item $c(f)\sim 1$ i $f$ irreductible a $\mathcal{F}[x]$.
+	\end{enumerate}
+\begin{proof}
+	Suposem primerament $\grau(f)\geq 1$ i $f$ irreductible a $R[x]$. Fem $f=c(f)f^*$ amb $f^*$ primitiu. Com que $f$ és irreductible tindrem per definició $c(f)\in U(R)\im c(f)\sim 1$. 
+	
+	Suposem ara $f=gh$ a $\mathcal{F}[x]$. Siguin $a,b\in R$ tals que $ag,bh\in R[x]$ llavors $$abf=(ag)(bh)\im ab\sim c(ag)c(bh)$$ ja que  $f$ és primitiu. Amb això podem descomposar $f$ a $R[x]$ d'acord amb $ab f=c(ag)c(bh)(ag)^*(bh)^*\im f\sim (ag)^*(bh)^*$ on $(ag)^*,(bh)^*$ són primitius. 
+	
+	Suposem $(ag)^*$ invertible $\im\grau((ag)\pr)=0$. D'aquesta manera $\grau(g)=\grau(ag)=\grau((ag)\pr)=0\im g$ és invertible a $\fra\im f$ és irreductible a $\fra[x]$. Si $(bh)\pr$ tenim el mateix resultat.
+	
+	Recíprocament suposem $f$ primitiu i irreductible a $\fra[x]$. Llavors $f\neq 0$ és no invertible $\im\grau(f)\geq 1$. Suposem que $f=gh$ és una descomposició a $R[x]\subseteq \fra[x]\im g$ o $h$ constants. Suposant $g$ constant haurà de ser $g\in R$ i així $$c(f)=c(g)c(h)=gc(h)=u \text{ amb } u\text{ invertible}$$
+	Amb això $g$ és invertible a $R$ i $f$ és irreductible a $R[x]$. Si $h$ és una constant procedim anàlogament.
+	\end{proof}
+\end{teorema}
+\begin{teorema}
+	Si $R$ és un DFU aleshores $R[x]$ és DFU.
+	\begin{proof}
+	Considerem $\mathcal{F}$ el cos de fraccions de $R$. Sigui $f(x)\in R[x]$ diferent de zero i no inverible.
+	
+	Si $\grau(f)=0\im f\in R\im f$ descompon en irreductibles de forma única a $R$ i hem acabat.
+
+	Suposem $\grau(f)\geq 1$. Tenim $f=f_1\ldots f_r$ a $\mathbb{F}[x]$ amb els $f_i$ irreductibles a $\mathcal{F}[x]$.
+	Sigui $a_i\in R$ tal que $a_if_i\in R[x]$ considerem doncs
+	$$a_1a_2\ldots a_r f=(a_1 f_1)(a_2f_2)\ldots(a_rf_r)$$ Aleshores $$(a_1\ldots a_r)c(f)f^*=c(a_1f_1)\ldots c(a_r f_r)(a_1f_1)^*\ldots (a_rf_r)^*$$
+	amb els $^*$ primitius. Sabem doncs que $$(a_1\ldots a_r)c(f)\sim c(a_1f_1)\ldots c(a_r f_r)\im f^*\sim(a_1f_1)^*\ldots (a_rf_r)^*$$
+	amb els $(a_if_i)^*$ primitius i irreductibles a $\mathcal{F}[x]$. Per tant seran irreductibles a $R[x]\im f*$ irreductible a $R[x]$ pel Lema de Gauss. En particular $c(f)\in R$ que és DFU i una descomposició de $f$ en irreductibles és:
+	$$f=c(f)f^*$$ prenent les descomposicions de $c(f)$ i $f^*$ en irreductibles.
+	
+	Veiem que aquesta és única. Per això veurem que tot irreductible de $R[x]$ és primer. Sigui $f\in R[x]$ irreductible. Suposem $f\div gh$. Si $\grau(f)=0$ llavors $f=a\in R$ i tenim $gh=a\alpha$ per cert $\alpha\in R[x]$. Sabem que $c(h)c(g)\sim ac(\alpha)$ a $R$ i per tant si $a\div c(f)c(g)\im$ $a$ divideix un dels dos. Suposem sense pèrdua de generalitat $a\div c(g)\im a\div g$ i hem acabat.
+	
+	Si $\grau(f)\geq 1$ com que $\mathcal{F}[x]$ és DFU $\im$ $f\div g$ o $f\div h$ a $\mathcal{F}[x]$. Suposem novament sense pèrdua de generalitat $f\div g$ a $\mathcal{F}[x]$. Això implica que $g=fq$ per cert $q\in \mathcal{F}[x]$. Sigui $a\in R$ tal que $aq\in R[x]$ tenim $ag=faq\im a c(g)\sim c(f)c(aq)\im ac(g)\sim ac(g)\sim c(aq)$ ja que $f$ és irreductible a $R[x]$ i per tant primitiu a $\mathcal{F}[x]$. Escrivint ara
+	$$ag=fc(aq)(aq)^*=fac(g)(aq)^*\im g=fc(g)(aq)^*$$ a $R[x]$. Per tant $f\div g$ a $R[x]$ i tot irreducctible és primer.
+\end{proof}
+\end{teorema}
+\begin{teorema}
+	Suposem $R$ DI. Aleshores són equivalents:
+	\begin{enumerate}
+		\item $R$ és DFU.
+		\item $R[x]$ és DFU.
+		\item $R[x_1,\ldots,x_n]$ és DFU.
+	\end{enumerate}
+\begin{proof}
+	Sabem que $(1)\im (2),(2)\im(3)$. Són conseqüència de l'anterior.
+	
+	Veiem $(3)\im(1)$. Primerament obsevem que $U(R[x])=U(R)$ ja que $R$ és DI. D'altra banda si $p\in R,p\neq0$ i no és invertible tindrem que $p$ és irreductible a $R$ si i només si $p$ és irreductible a $R[x]$.
+	
+	Prenem doncs $a\in R$ no invertible i diferent de zero. Com que $a\in R[x_1,\ldots,x_n]$ tenim que $a=p_1\ldots p_n$ amb $p_i$ irreductibles a $R[x]$ $\im$ $p_i$ irreductibles a $R$. Veiem que tot irreductible és primer a $R$. Si $p\in R$ és irreductible suposem $p\mid ab$. Per ser $p$ primer a $R[x_1,\ldots,x_n]$ tenim per exemple $a=p\alpha$ amb $\alpha\in R[x_1,\ldots,x_n]\im \alpha \in R\im a=p\alpha$ a $R$\footnote{Pregunta. L'unicitat era clara, si tinguèssim altra descomposició també la tindríem a $R[x_1,\ldots,x_n]$}.
+\end{proof}
+\end{teorema}
+\section{Irreductibilitat}
+\begin{proposicio}
+	Sigui $K$ un cos i $f\in K[x]$, aleshores:\begin{enumerate}
+		\item $\grau(f)=1\im f$ irreductible.
+		\item$\grau(f)=2$ o $3$ llavors $f$ irreductible si i només si $f$ no té arrels a $K$.
+	\end{enumerate}
+\end{proposicio}
+Si un polinomi de grau major a 4 no té arrels generalment no podem dir res. Cal buscar altres arguments.
+\begin{proposicio}
+	Sigui $R$ un DFU i $f(x)=\sum_{i=0}^{n}a_ix^i$. Sigui $\mathcal{F}$ el cos de fraccions de $R$. Suposem que $\tfrac{a}{b}$ és arrel de $f(x)$ amb $\mcd(a,b)=1$. Aleshores $a\div a_0$ i $b\div a_n$.
+	\begin{proof}
+		Tenim $$a_0+a_1\frac{a}{b}+\ldots+a_n\frac{a^n}{b^n}=0\implies b^na_0+a_1ab^{n-1}+\ldots+a_na^n =0$$
+		D'aquesta manera $$b^n a_0+\ldots a_{n-1}a^{n-1}b=-a_na^n$$
+		i $b\div a_na^n\im b\div a_n$. Anàlogament $a\div a_0$.
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}(Criteri modular)
+	Sigui $R$ un DFU. Sigui $f=\sum_{i=0}^{n}a_ix^i\in R[x]$ primitiu. Sigui $p\in R$ irreductible tal que $p\nmid a_n$. Aleshores si $\tilde{f}=\sum_{i=0}^{n}\bar{a_i}x^i\in R/(p)[x]$ és irreductible $f$ és irreductible a $R[x]$.\begin{proof}
+		Suposem que $f=gh\in R[x]$. Així $g=\sum_{i=0}^{m}b_ix^i$ i $h=\sum_{i=0}^{t}c_ix^i$. Considerem $$\varphi: R[x]\longrightarrow R/(p)[x]$$ donat per $\varphi(\sum_{i=0}^{n}a_ix^i)=\sum_{i=0}^{n}\bar{a_i}x^i\in R/(p)[x]$. Així doncs $\tilde{f}=\sum_{i=0}^{n}\bar{a_i}x^i=(\sum_{i=0}^{m}\bar{b_i}x^i)(\sum_{i=0}^{t}\bar{c_i}x^i)=\tilde{g}\tilde{h}\im \tilde{g}$ o $\tilde{h}$ invertibles a $R/(p)[x]$. 
+		
+		Suposem $\tilde{g}$ invertible. Com que $(p)$ és primer $R/(p)[x]$ és DI i per tant $\tilde{g}\in R/(p)$. Com que $\tilde{f}$ té grau $n$ a $R/(p)[x]$ en tant que $p\nmid a_n$ tenim que necessàriament $h$ ha de tenir grau $n\im\grau(g)=0\im g=b\in R$. Així escrivim $f=bh\im c(f)=bc(h)=1\im b\in U(R)$ i $f$ és irreductible.
+	\end{proof}
+\end{proposicio}
+\begin{proposicio} (Criteri d'Eisenstein)
+	Sigui $R$ un DFU. Sigui $f=\sum_{i=0}^{n}a_ix^i\in R[x],n \geq 1$ primitiu. Suposem que existeix $p\in R$ irreductible tal que $p\div a_0,p\div a_1,\ldots p\div a_{n-1},p\nmid a_n,p^2\nmid a_0$. Aleshores $f$ és irreductible a $R[x]$.
+	\begin{proof}
+		Suposem $f=ah$ amb $a\in R$. Llavors $c(f)=ac(h)=1$ i $a\in U(R)$.
+		
+		Suposem doncs que $f=gh$ amb $\grau(g),\grau(h)>0$. Tenim $g=\sum_{i=0}^{m}b_ix^i$ i $h=\sum_{i=0}^{t}c_ix^i$ amb $m,t\geq 1$ i $m+t=n$. Quan ho mirem a $R/(p)$ tenim que $\bar{f}=\bar{a_n}x^n=\bar{g}\bar{h}$ i com que $\bar{a_n}=\bar{b_mc_t}$ ha de ser $\bar{b_0}=\bar{c_0}=0$ i $b_0,c_0$ són múltiples de $p$. Hem arribat a contradicció puix $p^2\div b_0c_0=a_0$.
+		
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}(Criteri d'Eisenstein dual)
+Sigui $R$ un DFU. Sigui $f=\sum_{i=0}^{n}a_ix^i\in R[x],n \geq 1$ primitiu. Suposem que existeix $p\in R$ irreductible tal que $p\nmid a_0,p\div a_1,\ldots p\div a_{n-1},p\div a_n,p^2\nmid a_n$. Aleshores $f$ és irreductible a $R[x]$.
+\begin{proof}
+	El mateix argument d'abans funciona.
+\end{proof}
+\begin{col}
+	Sigui $R$ DFU, $\mathcal{F}$ el cos de fraccions de $R$. Sigui $f=\sum_{i=0}^{n}a_ix^i\in R[x],n \geq 1$. Suposem que existeix $p\in R$ irreductible tal que $p\div a_0,p\div a_1,\ldots p\div a_{n-1},p\nmid a_n,p^2\nmid a_0$. Aleshores $f$ és irreductible a $\mathcal{F}[x]$.
+	\begin{proof}
+		Posem $f=c(f)f^*$. Considerem $f^*\in R[x]$. Aleshores $f^*$ i $p$ compleixen les condicions del criteri d'Eisenstein i $f^*$ és irreductible a $R[x]$. Com que a més $n\geq 1$ tenim $f^*$ és irreductible a $\mathcal{F}[x]$. Finalment com que $c(f)\in R$ tenim $f=c(f)f^*$ irreductible a $\mathcal{F}[x]$.
+	\end{proof}
+\end{col}
+\end{proposicio}
+\chapter{Cossos finits}
+\section{Primers resultats}
+Observem que si $p$ és primer a $\mathbb{Z}$ llavors $(p)$ és primer $\im$ $(p)$ és maximal i $\mathbb{Z}/(p)$ és cos. Raonant de forma similar arribem a la conclusió que si prenem $f=x^2+x+1\in \mathbb{Z}/(2)[x]$ irreductible, aleshores:
+$$K=\faktor{\mathbb{Z}/(2)[x]}{(x^2+x+1)}$$
+
+Si tenim $g\in \mathbb{Z}/(2)[x]$ i fem $g=qf+r$ llavors $\grau(r)<\grau(f)=2$ i per tant $\bar{g}=\bar{r}$, és a dir, a $K$ només hi ha polinomis de grau 1. Però sabem quins són aquests i si $\alpha=\bar{x}$:
+$$K=\{0,1,\alpha,\alpha+1\}$$
+té 4 elements.
+
+\begin{proposicio}
+A  $\mathbb{Z}/(p)[x]$ amb $p$ primer el grau dels irreductibles no és fitat.
+\begin{proof}
+Suposem que els polinomis irreductibles de $\mathbb{Z}/(p)[x]$ tenen grau fitat per $n$.  Suposem que $n$ és la més petita de les fites superiors. Aleshores hi ha un número finit ja que de  polinomis de grau $\leq n$ hi ha $p^{n+1}$. Suposem que $p_1,\ldots,p_t\in\mathbb{Z}/(p)[x]$ són els irreductibles. Considerem:
+$$f(x)=p_1(x)\ldots p_t(x)+1$$ que no és irreductible per tenir grau $>n$. Aleshores algun $p_i$ ha de dividir $f$ i per tant ha de dividir 1. Hem arribat a contradicció.
+\end{proof}
+\end{proposicio}
+
+Observem doncs que si $K$ és un cos finit, la seua característica és $p$ primer. Aleshores el subcos primer de $K$ és $\mathbb{Z}/(p)\subseteq K$.
+
+A més si ${F}$ és subcos de $K$ tindrem que ${F}$ i ${K}$ tenen la mateixa característica ja que $1_{F}=1_K$. Si $L$ és un cos tal que $K\subseteq L$ $K$ i $L$ tenen la mateixa característica.
+\begin{proposicio}
+	Siguin $K$ i $L$ cossos tals que $K\subseteq L$. Aleshores $L$ és un $K$-espai vectorial.
+	\begin{proof}
+		Amb la suma a $L$, $L$ és un grup abelià. Si $\lambda\in K$ i $a\in L$ és defineix el producte com el producte de $L$.
+	\end{proof}
+\end{proposicio}
+\begin{proposicio}Suposem $K$ cos.
+	Si $K$ té característica $p$ (serà primer), aleshores $\ordre{K}=p^n$ per cert $n$ natural. Recíprocament si $\ordre{K}=p^n$ llavors $K$ té característica $p$.
+	\begin{proof}
+		Suposem $\ch(K)=p$. Aleshores $\mathbb{Z}/(p)\subseteq K$ i $K$ és un $\mathbb{Z}/(p)$-espai vectorial de dimensió finita positiva. Posem $\dim(K)=n\im K\cong \mathbb{Z}/(p)\times\stackrel{n)}\ldots\times\mathbb{Z}/(p)$. Per tant $\ordre{K}=p^n$.
+		
+		Suposem ara $\ordre{K}=p^n$ amb $p$ primer. Tenim que $\ch(K)=q$ primer. Com que $\mathbb{Z}/(q)\subseteq K\im \ordre{K}=q^m=p^n\im p=q$.
+	\end{proof}
+\end{proposicio}
+\begin{col}Sigui $K$ és un cos finit amb $p^n$ (primer) elements. Sigui $F$ un subcos de $K$. Aleshores $\ordre{F}=p^d$ amb $d\mid n$.
+	\begin{proof}
+		Suposem $F$ subcos de $K$. Aleshores $\ch(K)=\ch(F)=p$. Així $\ordre{F}=p^d$. Aleshores $\mathbb{Z}/(p)\subseteq F\subseteq K$ i $K$ és un $F$-espai vectorial. Igual que abans tenim $p^n=\ordre{K}=\ordre{F}^m=(p^d)^m=p^dm\im d\div n$.
+	\end{proof}
+\end{col}
+\begin{teorema} (Teorema de l'element primitiu)
+	Sigui $K$ un cos finit. Aleshores el grup multiplicatiu $K^*$ és cíclic. Anomenarem element primitiu a un generador de $K^*$.
+\begin{proof}
+	Com que $K$ és finit tenim $\ordre{K}=p^n$ amb $p$ primer. Aleshores si $K^*=K\setminus\{0\}\im \ordre{K^*}=p^n-1$. Posem $q=p^n$ i també $p^n-1=q-1=p_1^{\alpha_1}\ldots p_r^{\alpha_r}$ amb els $p_i$ primers diferents.
+	
+	Considerem els polinomis $$f_i=x^{\tfrac{q-1}{p_i}}-1$$ que com a màxim tenen $\tfrac{q-1}{p_i}$ arrels a $K$. En particular existeix algun element $y_i\in K^*$ tal que $y_i$ no és arrel de $f_i$, és a dir $y_i^{\tfrac{q-1}{p_i}}\neq 1$. Considerem també$$x_i=y_i^{\tfrac{q-1}{p_i^{\alpha_i}}}\in K^*$$ Veurem que l'ordre de $x_i$ a $K^*$ és $p_i^{\alpha_i}$.
+	
+	Primer observem que $$x_i^{p_i^{\alpha_i}}=y_i^{q-1}=1$$ ja que l'ordre de $K^*$ és $q-1$. Conseqüentment tenim $\ordre{x_i}\mid p_i^{\alpha_i}\im \ordre{x_i}=p_i^{\beta_i},\;\beta_i\leq\alpha_i$.
+	
+	Suposem $\beta_i <\alpha_i$. Llavors $$1=x_i^{p_i^{\beta_i}}=y_i^{\tfrac{q-1}{p_i^{\alpha_i-\beta_i}}}$$ amb $\alpha_i-\beta_i\geq 1$. Però d'altra banda $$y_i^{\tfrac{q-1}{p_i}}=y_i^{\big(\tfrac{q-1}{p_i^{\alpha_i-\beta_i}}\big)^{\alpha_i-\beta_i-1}}=1$$ la qual cosa és una contradicció. Ha de ser doncs $\alpha_i=\beta_i$ i $\ordre{x_i}=p_i^{\alpha_i}$ a $K^*$.
+	
+	
+	Per cada $p_i$ tenim $x_i=y_i^{\tfrac{q-1}{p_i^{\alpha_i}}}$ tal que $\ordre{x_i}=p_i^{\alpha_i}$. Sigui $\beta=x_1\ldots x_r$ els $x_i$ tenen ordres coprimers i per tant $\ordre{\beta}=p_1^{\alpha_1}\ldots p_r^{\alpha_r}=q-1$. Hem trobat $\beta$ element primitiu.
+\end{proof}
+\end{teorema}
+
+Recapitulem, fins al moment hem vist que si $K$ és un cos finit llavors $\ordre{K}=p^n,p=\ch(K),p$ primer i que el grup multiplicatiu $K^*$ és cíclic. Observem també que si $\beta$ és un element primitiu de $K^*$ llavors els elements primitius de $K^*$ seran aquells $\gamma\in K^*$ que compleixen: $\mcd(\gamma,\ordre{K^*})=1$.
+
+\begin{teorema}
+	Sigui $K$ un cos finit amb característica $p$ primer. Aleshores existeix un polinomi irreductible $f(x)\in \mathbb{Z}/(p)[x]$ de grau $n$ tal que $$K\cong \faktor{\mathbb{Z}/(p) [x]}{(f(x))}
+$$
+\begin{proof}
+	Sigui $\beta\in K^*$ un element primitiu. Considerem el morfisme avaluació $\varphi:\mathbb{Z}/(p)[x]\longrightarrow K$ donat per $\varphi(x)=\varphi(\beta)$. Sabem que és epimorfisme d'anells ja que $K^*$ és generat per $\beta$. Tenim doncs pel 1r teorema d'isomorfia: $$\faktor{\mathbb{Z}/(p)[x]}{\ker(\varphi)}\cong K$$ i com que $\ker(\varphi)\neq(0)\im \ker(\varphi)$ és maximal. Com que $\mathbb{Z}/(p)[x]$ és DIP tenim $\ker(\varphi)=(f(x))$ amb $f(x)$ irreductible a $\mathbb{Z}/(p)[x]$.
+\end{proof}
+\end{teorema}
+
+Si considerem l'extensió de cossos $K\subseteq L$ i $\gamma\in L$ i prenem el morfisme avaluació en $\gamma$, $\varphi:K[x]\longrightarrow L$ tenim:
+\begin{enumerate}
+	\item $\varphi$ injectiu. Llavors $\gamma$ no compleix cap polinomi amb coeficients a $K$. Diem que $\gamma$ és transcendent sobre $K$.
+\item Si $\ker(\varphi)\neq(0)\im\gamma$ és arrel d'algun polinomi a $K[x]$. Diem que $\gamma$ és algebraic sobre $K$. Tenim $$\faktor{K[x]}{\ker(\varphi)}\cong \ima(\varphi)\subseteq L$$ 
+Com que $\ima(\varphi)$ és dins d'un cos, que no té divisors de zero és DI. Per tant $\ker(\varphi)$ és primer i en particular maximal per ser diferent de zero i estar contigut a un DIP. En conseqüència $\ima(\varphi)$ és un cos. A més de generadors de $\ker(\varphi)$ mònics només hi ha un.  Es denota generalment $\irr(\gamma,K)$.
+\end{enumerate}
+
+Observem que si $K$ és finit llavors té característica $p$ primer i tot element $\gamma\in K$ és algebraic sobre $\mathbb{Z}/(p)$.
+\section{Existència de cossos finits}
+ Primerament suposem que $K$ és un cos amb $p^n$ elements i $a\in K$ diferent de 0. Sabem que $a^{p^n-1}=1\im a^{p^n}=a$ i també $0^{p^n}=0$. És a dir, si $a\in K$ $a$ és arrel del polinomi $f=x^{p^n}-x\in \mathbb{Z}/(p)[x]$.
+ \begin{definicio}
+ 	Siguin $K\subseteq L$ cossos. Sigui $f(x)\in K[x]$. Diem que $f$ descompon a $L$ si hi té totes les arrels, és a dir, $f(x)=(x-\alpha_1)\ldots(x-\alpha_r)\in L[x]$ (amb les $\alpha_i$ potser repetides).
+ 	
+ 	Diem que $L$ és un cos de descomposició de $f$ si $L$ és el mínim cos on $f$ descompon. Diem
+ 	$$L=K(\alpha_1,\ldots,\alpha_r)$$
+ 	generat per $K$ i les arrels $\alpha_i$ de $f$.
+ \end{definicio} 
+\begin{teorema}(Teorema de Kronecker)
+Sigui $K$ un cos, $f(x)\in K[x]$. Aleshores existeix un cos $L$, $K\subseteq L$ tal que $f$ descompon a $L$.
+\begin{proof}
+	Suposem $\grau(f)\geq 1$. Sigui $h(x)\in K[x]$ un factor irreductible de $f(x)$. Considerem $$L_1=\faktor{K[x]}{(h(x))}$$ Com que $h$ és irreductible és primer i per tant $(h(x))$ és primer i en conseqüència maximal. A $L_1$ $h(x)$ té una arrel $(\alpha_1=\bar{x})$ de manera que podem escriure $f(x)=(x-\alpha_1)g_1(x)$ amb $\grau(g_1)<\grau(f)$. Si $g_1(x)$ descompon a $L_1[x]$ ja ho tenim. Si no, repetim el mateix argument formant una cadena $K\subseteq L_1\subseteq\ldots$ que serà finita ja que el grau de $f$ és finit. Per tant, $f$ descompondrà com a producte de factors lineals en un nombre finit de passos.
+\end{proof}
+\end{teorema}
+\begin{definicio}
+	Sigui $K$ un cos i $f(x)=a_0+a_1x+\ldots+a_nx^n\in K[x]$. Definim la derivada formal de $f$ com $f'=a_1+2a_2x+\ldots+na_{n}x^{n-1}\in K[x]$ on $ia_i=a_i+\stackrel{i)}\ldots+a_i$ a $K$.
+\end{definicio}
+Algunes propietats són per $f,g\in K[x]$:
+\begin{enumerate}
+	\item $(af)'=af'$\item $(f+g)'=f'+g'$\item $(fg)'=f'g+fg'$\item $(f^n)'=nf'f^{n-1}$\item $f(g(x))=g'f'(g(x))$
+\end{enumerate}
+\begin{proposicio}
+Si $K$ és un cos i i $f(x)=a_0+a_1x+\ldots+a_nx^n\in K[x]$ amb $n\geq 1$ aleshores:\begin{enumerate}
+	\item Si $\ch(K)=0\im f'\neq 0$\item Si $\ch(K)=p\neq 0$ llavors $f'=0\implies p\div i\;\forall i>0$ tal que $a_i\neq 0$. 
+\end{enumerate}
+\begin{proof}
+	\begin{enumerate}
+		\item Si $\ch(K)=0$ llavors $na_n\neq0\im f'\neq0$.
+		\item Si ara $\ch(K)=p\neq0$ tenim $f'=0\implies ia_i=0\;\forall i\implies p\div(ia_i)\implies p\div i$ ja que si $p\div a_i\im a_i=0$.
+	\end{enumerate}
+\end{proof}
+\end{proposicio}
+\begin{proposicio}
+	Sigui $K$ un cos i i $f(x)=a_0+a_1x+\ldots+a_nx^n\in K[x]$ amb $n\geq 1$. Sigui $\alpha$ arrel de $f$. Aleshores $\alpha$ és una arrel múltiple de $f$ si i només si $\alpha$ és també arrel de $f'$.
+	\begin{proof}
+	Suposem $\alpha $ arrel múltiple de $f$. Llavors en algun cos $L$ $K\subseteq L$ tenim $f=(x-\alpha)^mg(x)$ amb $m\geq 2$. Així $f'=m(x-\alpha)^{m-1}g(x)+(x+\alpha)^mg'(x)\im \alpha $ és arrel de $f'$.
+	
+	Recíprocament suposem $\alpha$ arrel de $f'$. Suposem que $\alpha$ no és arrel múltiple de $f$. Aleshores $f=(x-\alpha)g(x)$ amb $(x-\alpha)\div g(x)$. D'aquesta forma $f'(x)=g(x)+(x-\alpha)g'$. Però $(x-\alpha)\div f'\im (x-g)\div g$ la qual cosa és una contradicció.
+	\end{proof}
+
+\end{proposicio}
+\begin{col}
+	$K$ cos i $f\in K[x]$. Si $\mcd(f,f')=1\im f$ no té arrels múltiples. (el recíproc és cert també).
+	\begin{proof}
+		Suposem $\mcd(f,f')=1$. La identitat de Bézout ens diu que: $g(x)f(x)+h(x)f'(x)=1$ per certs $g(x),h(x)\in K[x]$
+	Si $f$ té una arrel múltiple $\alpha$ és arrel de $f'(x)\im (x-\alpha)\div 1$ i arribem a contradicció.	\end{proof}
+\end{col}
+\begin{teorema}(Teorema d'existència)
+Per a tot primer $p$ i natural $n$ existeix un cos amb $p^n$ elements.\begin{proof}
+	Considerem $x^{p^n}-x\in \mathbb{Z}/(p)[x]$. Sigui $L$ un cos de descomposició de $x^{p^n}-x$. Sigui $F=\{a\in L\barra a^{p^n}=a\}\subseteq L$. Veiem que $F$ té $p^n$ elements.
+	
+	Fent la derivada formal d'aquest polinomi veiem que $\mcd(x^{p^n}-x,-1)=1$ i per tant no té arrels repetides.
+	En conseqüència $\ordre{F}=p^n$. Només hem de veure que és tancat.
+	
+	Així doncs tenim que si $a,b\in F$ llavors $$(a+b)^p=a^p+b^p$$ $$(a+b)^{p^2}=a^{p^2}+b^{p^2}$$ i en general $$(a+b)^{p^n}=a^{p^n}+b^{p^n}=a+b$$
+	de manera que $a+b\in F$. Igualment $(ab)^{p^n}=a^{p^n}b^{p^n}=ab\im ab\in F$. I com que $F$ és dins de $L$ que és cos, $F$ és DI. En particular tot DI finit és cos.
+\end{proof}
+\end{teorema}
+\begin{col}
+	Per a cada $n$ existeix un polinomi irreductible de grau $n$ a $\mathbb{Z}/(p)[x]$.
+	\begin{proof}
+		Sigui $K$ un cos amb $p^n$ elements. Sabem que existeix $f\in \mathbb{Z}/(p)[x]$ irreductible tal que $$K\cong \faktor{\mathbb{Z}/(p)[x]}{(f)}\im \ordre{K}=p^{\grau(f)}=p^n$$
+	\end{proof}
+\end{col}
+\section{Unicitat dels cossos finits}
+\begin{proposicio}
+	Sigui $f\in\mathbb{Z}/(p)[x]$ irreductible de grau $d$. Si $n$ és múltiple de $d$ aleshores $f\div (x^{p^n}-x)$, és a dir $x^{p^n}-x$ és múltiple de tots els polinomis irreductibles de grau $d$ amb $d$ divisor de $n$.\begin{proof}
+	 Tenim $f$. Suposem $n=n'd$ amb $n'$ natural. Pel teorema de Kronecker sabem que $f$ té una arrel $\alpha$ en un cos $L$.
+	 
+	 Considerem el morfisme avaluació en $\alpha$ $\varphi: \mathbb{Z}/(p)[x]\longrightarrow L$. Tenim $f\in \ker(\varphi)$ ja que $f(\alpha)=0$. Com que $f$ és irreductible i estem a un DIP haurà de ser $\ker(\varphi)=(f)$. Així pel 1r teorema d'isomorfia:
+	 $$\faktor{\mathbb{Z}/(p)[x]}{(f)}\cong \ima(\varphi)\subseteq L$$
+	 
+	 Sabem doncs que $\ima(\varphi)$ serà un cos de $p^d$ elements. D'aquesta manera el seu grup multiplicatiu és cíclic i tenim que si $a\in\ima(\varphi)\im a^{p^d}=a$. Així $\alpha^{p^d}=\alpha\im (\alpha^{p^d})^{p^d}= \alpha^{p^d}=\alpha$ i d'aquesta manera fins a $\alpha^{p^n}=\alpha\im \alpha$ també és arrel de $x^{p^n}-x\im x^{p^n}-x\in\ker(\varphi)$. És a dir $x^{p^n}-x\in (f)$.
+	\end{proof}
+\end{proposicio}
+\begin{teorema}(Teorema d'unicitat)
+ Si $K$ i $F$ són dos cossos amb $p^n$ elements llavors $F\cong K$.
+ \begin{proof}
+ 	Suposem que $F$ és el cos de les arrels de $x^{p^n}-x$. D'altra banda sabem que existeix $f\in \mathbb{Z}/(p)[x]$ irreductible de grau $n$ tal que $$K\cong \faktor{\mathbb{Z}/(p)[x]}{(f)}$$
+ 	Amb això $f\div (x^{p^n}-x)\im f$ té totes les arrels a $F$. Sigui $a\in F$ una arrel de $f$ i com sempre $\varphi:\mathbb{Z}/(p)[x]\longrightarrow F$ el morfisme avaluació en $a$. Sabem que $\ker(\varphi)=(f)$ i $$\faktor{\mathbb{Z}/(p)[x]}{(f)}\cong\ima(\varphi)\subseteq F\im \ima(\varphi)=F$$ ja que tenen el mateix nombre d'elements.
+ \end{proof}
+\end{teorema}
+\begin{teorema} Sigui $K$ un cos amb $p^n$ elements. Aleshores per cada $d\div n$ existeix un únic subcos de $K$ amb $p^d$ elements.
+	\begin{proof}
+Sigui $f$ un polinomi irreductible de grau $d$, $f\in \mathbb{Z}/(p)[x]$. Com que $f\div (x^{p^n}-x)\im f$ té les arrels a $K$. La imatge del morfisme avaluació $\varphi:\mathbb{Z}/(p)[x]\longrightarrow K$ per una arrel és un subcos de $K$ i té $p^d$ elements.
+	\end{proof}
+\end{teorema}
+\begin{proposicio}
+	Considerem $x^{p^n}-x,x^{p^d}-x\in\mathbb{Z}/(p)[x]$. Aleshores $x^{p^d}-x\div x^{p^n}-x $ si i només si $d\div n$.
+\end{proposicio}
+\begin{teorema}
+	A $\mathbb{Z}/(p)[x]$ tenim $x^{p^n}-x\sim\prod_{f(x)} f(x)$ amb els $f(x)$ irreductibles de grau $d\div n$.
+	\begin{proof}
+	Com que els diferents $f$ són mònics i irreductibles no són associats i per tant $\prod_{f(x)} f(x)\div x^{p^n}-x$. Veiem que són iguals.
+		
+		Sigui ara $\mathbb{F}=\mathbb{F}_{p^n}$ el cos de $p^n$ elements. Sigui $\alpha$ arrel de $x^{p^n}-x$, és a dir, $\alpha\in \mathbb{F}$. Considerant $\varphi: \mathbb{Z}/(p)[x]\longrightarrow \mathbb{F}$ de forma que $\varphi(x)=\alpha$ tenim $$\faktor{\mathbb{Z}/(p)[x]}{\ker(\varphi)}\cong \ima(\varphi)\subseteq\mathbb{F}$$
+		i sabem que $\ima(\varphi)$ és un subcos de $\mathbb{F}$.
+		
+		A més $\ordre{\ima(\varphi)}=p^d$ i $\ker(\varphi)=(f(x))$ amb $f(x)$ irreductible mònic. Així$$\ordre{\faktor{\mathbb{Z}/(p)[x]}{\ker(f(x))}}=p^{\grau(f(x))}=p^d$$
+		
+		Ara sabem que $x^{p^n}-1=g(x)\prod_{f(x)} f(x)$ per cert $g(x)$. Ara bé, qualsevol arrel $\alpha$ compleix un dels $f(x)$. Per tant $g$ no té cap i és una constant. Tenim doncs $x^{p^n}-x\sim\prod_{f(x)} f(x)$.
+	\end{proof}
+\end{teorema}
+
+Sigui $K$ un cos amb $\ch(K)=p\neq 0$. Aleshores considerem $$\phi:K\longrightarrow K$$ donada per $\phi(a)=a^p$. És un morfisme de cossos (injectiu). S'anomena \emph{morfisme de Frobenius}.
+
+Si $K$ és finit $\phi$ és també exhasutiu.
+\begin{teorema} Sigui $f\in \mathbb{Z}/(p)[x]$ irreductible de grau $n$. Sigui $\alpha$ una arrel de $f$ en un cos finit $K$. Aleshores les arrels de $f$ són $\alpha,\alpha^p,\alpha^{p^2},\ldots,\alpha^{p^{n-1}}$. A més $\alpha^{p^n}=\alpha$.\begin{proof}
+		
+		Veiem que les potències són arrels. Si $f=\sum_{i=0}^{n}a_ix^i\in\mathbb{Z}/(p)[x]$. D'aquesta manera $$(\sum_{i=0}^{n}a_i\alpha^i)^p=0^p=0$$
+		i també $$0=f(\alpha)^p=(\sum_{i=0}^{n}a_i\alpha^i)^p=\sum_{i=0}^{n}a_i(\alpha^i)^p=f(\alpha^p)$$ de manera que $\alpha^p$ és arrel. Repetint l'argument, les potències esmentades de $\alpha$ són arrels de $f$.
+		
+		Veiem que totes les potències de $\alpha$ són diferents. Suposem $\alpha^{p^i}=\alpha^{p^j},n>i>j$. Considerem $K$ cos finit tal que $\alpha \in K$. Sigui $\phi$ el morfisme de Frobenius tenim $\alpha^{p^i}=\phi^i(\alpha)=\alpha^{p^j}=\phi^j(\alpha)\im \phi^{i-j}(\alpha)=\alpha\im \alpha^{p^{i-j}}=\alpha$.
+		
+		Escrivim $t=i-j$. Aleshores $\alpha$ és arrel del polinomi $x^{p^t}-x\in \mathbb{Z}/(p)[x]$. En conseqüència $\alpha$ és arrel d'un polinomi irreductible de grau $s$, $g\in \mathbb{Z}/(p)[x]$ tal que $s\div t$. Però $s<n$ contradiu el fet que $\alpha$ és arrel també d'un polinomi irreductible de grau $n$. Per tant són totes diferents.
+		
+		Com que $f$ és irreductible de grau $n$ tenim $f\div x^{p^n}-x\im \alpha$ és arrel de $x^{p^n}-x\im \alpha^{p^n}=\alpha$.
+		\end{proof}
+\end{teorema}
+\begin{col}
+	Sigui $K$ un cos finit. Sigui $\gamma\in K$. Sigui $d$ el mínim tal que $\gamma^{p^d}=\gamma$. Aleshores:$$\irr(\gamma,\mathbb{Z}/(p))=(x-\gamma)(x-\gamma^p)(x-\gamma^{p^2})\ldots(x-\gamma^{p^{d-1}})$$
+	\begin{proof}
+		Els elements de $K$ són les arrels de $x^{p^n}-x\im \irr(\gamma,\mathbb{Z}/(p))\div x^{p^n}-x$. Fem $f=\irr(\gamma,\mathbb{Z}/(p))$. Suposem $\grau(f)=s$. Volem veure que $s=d$. Sabem doncs que $f\div x^{p^s}-x\im \gamma $ és arrel de $x^{p^s}$. Com que $d$ és el mínim tenim $s=d=\grau(f)$. Les altres arrels són doncs $\gamma,\gamma^p,\ldots,\gamma^{p^{d-1}}$.	\end{proof}
+\end{col}
+\end{document}
